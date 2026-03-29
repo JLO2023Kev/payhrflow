@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>PayFlow Global — Enterprise HR & Payroll</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0A1628;
+  --navy-2: #0F2040;
+  --navy-3: #162D52;
+  --blue: #1D6FEB;
+  --blue-light: #4A8FF7;
+  --blue-pale: #EBF2FF;
+  --accent: #00C896;
+  --accent-2: #00A87E;
+  --amber: #F59E0B;
+  --red: #EF4444;
+  --purple: #7C3AED;
+  --surface: #FFFFFF;
+  --surface-2: #F7F9FC;
+  --surface-3: #EEF2F8;
+  --border: #E2E8F0;
+  --border-2: #CBD5E1;
+  --text-1: #0F172A;
+  --text-2: #475569;
+  --text-3: #94A3B8;
+  --text-inv: #FFFFFF;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow: 0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg: 0 20px 48px rgba(0,0,0,.12), 0 8px 20px rgba(0,0,0,.06);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --sidebar-w: 240px;
+  --header-h: 60px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-1);background:var(--surface-2);-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;outline:none}
+input,select,textarea{font-family:inherit;outline:none;border:none}
+a{text-decoration:none;color:inherit}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:4px}
+
+/* ===== LAYOUT ===== */
+.app{display:flex;height:100vh;overflow:hidden}
+.sidebar{width:var(--sidebar-w);background:var(--navy);display:flex;flex-direction:column;flex-shrink:0;position:relative;z-index:100}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.header{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;flex-shrink:0}
+.content{flex:1;overflow-y:auto;padding:28px 28px;background:var(--surface-2)}
+
+/* ===== SIDEBAR ===== */
+.sidebar-logo{padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.logo-mark{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#1D6FEB,#00C896);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-weight:700;flex-shrink:0}
+.logo-text{color:#fff;font-size:15px;font-weight:600;line-height:1.2}
+.logo-sub{color:rgba(255,255,255,.4);font-size:10px;font-weight:400;letter-spacing:.5px;text-transform:uppercase}
+.sidebar-plan{margin:12px 14px;background:rgba(0,200,150,.12);border:1px solid rgba(0,200,150,.2);border-radius:8px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between}
+.plan-badge{font-size:10px;font-weight:600;color:var(--accent);letter-spacing:.5px;text-transform:uppercase}
+.plan-name{font-size:11px;color:rgba(255,255,255,.7)}
+.sidebar-section{padding:16px 14px 6px;font-size:10px;font-weight:600;color:rgba(255,255,255,.3);letter-spacing:1px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 14px;margin:1px 8px;border-radius:8px;color:rgba(255,255,255,.55);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;position:relative}
+.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.9)}
+.nav-item.active{background:rgba(29,111,235,.25);color:#fff}
+.nav-item.active::before{content:'';position:absolute;left:-8px;top:50%;transform:translateY(-50%);width:3px;height:18px;background:var(--blue-light);border-radius:0 3px 3px 0}
+.nav-icon{width:18px;height:18px;opacity:.7;flex-shrink:0}
+.nav-item.active .nav-icon{opacity:1}
+.nav-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:20px;min-width:18px;text-align:center}
+.sidebar-bottom{margin-top:auto;padding:14px;border-top:1px solid rgba(255,255,255,.08)}
+.user-block{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer}
+.user-block:hover{background:rgba(255,255,255,.07)}
+.user-ava{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--accent));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0}
+.user-name{font-size:13px;font-weight:500;color:#fff}
+.user-role{font-size:11px;color:rgba(255,255,255,.4)}
+
+/* ===== HEADER ===== */
+.header-title{font-size:16px;font-weight:600;color:var(--text-1);flex:1}
+.header-search{display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;width:240px}
+.header-search input{background:none;font-size:13px;color:var(--text-1);flex:1;min-width:0}
+.header-search input::placeholder{color:var(--text-3)}
+.header-btn{width:36px;height:36px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;position:relative}
+.header-btn:hover{background:var(--blue-pale);border-color:var(--blue-light)}
+.notif-dot{position:absolute;top:7px;right:7px;width:7px;height:7px;background:var(--red);border-radius:50%;border:2px solid #fff}
+.country-sel{display:flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-2)}
+.country-flag{font-size:16px}
+
+/* ===== CARDS ===== */
+.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.card-header{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border)}
+.card-title{font-size:14px;font-weight:600;color:var(--text-1)}
+.card-sub{font-size:12px;color:var(--text-3);margin-top:2px}
+.card-body{padding:20px}
+
+/* ===== STAT CARDS ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);padding:20px;position:relative;overflow:hidden;transition:box-shadow .2s}
+.stat-card:hover{box-shadow:var(--shadow)}
+.stat-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius) var(--radius) 0 0}
+.stat-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+.stat-value{font-size:26px;font-weight:700;color:var(--text-1);letter-spacing:-.5px;line-height:1}
+.stat-label{font-size:12px;color:var(--text-3);margin-top:4px;font-weight:500}
+.stat-change{font-size:11px;font-weight:600;margin-top:8px;display:flex;align-items:center;gap:4px}
+.stat-change.up{color:var(--accent)}
+.stat-change.down{color:var(--red)}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:#1560d4}
+.btn-success{background:var(--accent);color:#fff}
+.btn-success:hover{background:var(--accent-2)}
+.btn-secondary{background:var(--surface-2);color:var(--text-2);border:1px solid var(--border)}
+.btn-secondary:hover{background:var(--surface-3);border-color:var(--border-2)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover{background:#dc2626}
+.btn-ghost{background:none;color:var(--text-2);padding:6px 10px}
+.btn-ghost:hover{background:var(--surface-3);color:var(--text-1)}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-lg{padding:11px 22px;font-size:14px;font-weight:600}
+.btn-icon{width:32px;height:32px;padding:0;justify-content:center}
+
+/* ===== TABLES ===== */
+.table-wrap{overflow-x:auto;border-radius:var(--radius)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--surface-2)}
+th{padding:10px 16px;font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:13px 16px;font-size:13px;color:var(--text-1);border-bottom:1px solid var(--border)}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:background .1s;cursor:pointer}
+tbody tr:hover{background:var(--blue-pale)}
+
+/* ===== BADGES ===== */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7}
+.badge-green{background:#ECFDF5;color:#059669}
+.badge-blue{background:var(--blue-pale);color:var(--blue)}
+.badge-amber{background:#FFFBEB;color:#D97706}
+.badge-red{background:#FEF2F2;color:var(--red)}
+.badge-purple{background:#F5F3FF;color:var(--purple)}
+.badge-gray{background:var(--surface-3);color:var(--text-2)}
+
+/* ===== FORMS ===== */
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:6px;letter-spacing:.2px}
+.form-label span{color:var(--red);margin-left:2px}
+.form-control{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-1);background:var(--surface);transition:border .15s}
+.form-control:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,111,235,.1)}
+.form-control::placeholder{color:var(--text-3)}
+select.form-control{cursor:pointer}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.form-hint{font-size:11px;color:var(--text-3);margin-top:4px}
+.form-section-title{font-size:13px;font-weight:700;color:var(--text-1);padding:14px 0 10px;border-bottom:1px solid var(--border);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+/* ===== TABS ===== */
+.tabs{display:flex;gap:2px;background:var(--surface-3);border-radius:10px;padding:3px}
+.tab{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.tab.active{background:var(--surface);color:var(--blue);font-weight:600;box-shadow:var(--shadow-sm)}
+
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(10,22,40,.5);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:100%;max-width:680px;max-height:90vh;overflow-y:auto;transform:translateY(10px);transition:transform .2s}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-lg{max-width:820px}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1}
+.modal-title{font-size:16px;font-weight:700;color:var(--text-1)}
+.modal-body{padding:24px}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;gap:10px;background:var(--surface-2);border-radius:0 0 var(--radius-lg) var(--radius-lg)}
+.modal-close{width:32px;height:32px;border-radius:8px;background:var(--surface-2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--text-2)}
+.modal-close:hover{background:var(--surface-3)}
+
+/* ===== WORKFLOW STEPS ===== */
+.workflow-steps{display:flex;align-items:center;gap:0;margin-bottom:24px}
+.wf-step{display:flex;align-items:center;gap:8px;flex:1}
+.wf-step-num{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text-3);flex-shrink:0}
+.wf-step.done .wf-step-num{background:var(--accent);border-color:var(--accent);color:#fff}
+.wf-step.active .wf-step-num{background:var(--blue);border-color:var(--blue);color:#fff}
+.wf-step-label{font-size:12px;font-weight:500;color:var(--text-3)}
+.wf-step.active .wf-step-label{color:var(--blue);font-weight:600}
+.wf-step.done .wf-step-label{color:var(--text-2)}
+.wf-line{flex:1;height:1.5px;background:var(--border);margin:0 8px}
+.wf-line.done{background:var(--accent)}
+
+/* ===== PAYSLIP PRINT STYLES ===== */
+@media print {
+  .app > .sidebar,.header,.no-print{display:none!important}
+  .content{padding:0!important;overflow:visible!important}
+  .main{overflow:visible}
+  body{background:white}
+  .payslip-doc{box-shadow:none!important;border:none!important;max-width:100%!important}
+}
+.payslip-doc{background:#fff;border-radius:12px;border:1px solid var(--border);padding:40px;max-width:760px;margin:0 auto;box-shadow:var(--shadow)}
+.payslip-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:24px;border-bottom:2px solid var(--navy)}
+.payslip-company{font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.5px}
+.payslip-company-sub{font-size:12px;color:var(--text-3);margin-top:2px}
+.payslip-title-block{text-align:right}
+.payslip-title{font-size:18px;font-weight:700;color:var(--blue)}
+.payslip-period{font-size:12px;color:var(--text-3);margin-top:2px}
+.payslip-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--border)}
+.payslip-info-group{}
+.payslip-info-label{font-size:10px;font-weight:700;color:var(--text-3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
+.payslip-info-row{display:flex;justify-content:space-between;margin-bottom:4px}
+.payslip-info-key{font-size:12px;color:var(--text-2)}
+.payslip-info-val{font-size:12px;font-weight:600;color:var(--text-1)}
+.payslip-earnings-table{width:100%;margin-top:20px;border-collapse:collapse}
+.payslip-earnings-table th{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.6px;padding:8px 0;border-bottom:1.5px solid var(--border);text-align:left}
+.payslip-earnings-table th:last-child,.payslip-earnings-table td:last-child{text-align:right}
+.payslip-earnings-table td{font-size:13px;color:var(--text-1);padding:9px 0;border-bottom:1px solid var(--surface-3)}
+.payslip-total-row td{font-weight:700;font-size:14px;padding-top:12px;border-top:2px solid var(--navy);border-bottom:none}
+.payslip-net-box{margin-top:20px;background:var(--navy);border-radius:10px;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
+.payslip-net-label{font-size:13px;color:rgba(255,255,255,.7);font-weight:500}
+.payslip-net-amount{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.payslip-footer{margin-top:24px;padding-top:16px;border-top:1px solid var(--border);font-size:11px;color:var(--text-3);text-align:center}
+
+/* ===== LEAVE CALENDAR ===== */
+.leave-cal{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border)}
+.leave-cal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.leave-cal-grid{padding:16px;display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day-header{text-align:center;font-size:11px;font-weight:600;color:var(--text-3);padding:4px 0}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;transition:all .1s;color:var(--text-2)}
+.cal-day:hover{background:var(--blue-pale);color:var(--blue)}
+.cal-day.today{background:var(--blue);color:#fff;font-weight:700}
+.cal-day.leave{background:#ECFDF5;color:#059669;font-weight:600}
+.cal-day.absent{background:#FEF2F2;color:var(--red);font-weight:600}
+.cal-day.holiday{background:#FFFBEB;color:#D97706}
+.cal-day.other-month{opacity:.3}
+.cal-day.selected{background:var(--navy);color:#fff}
+
+/* ===== APPROVAL WORKFLOW ===== */
+.approval-track{display:flex;flex-direction:column;gap:0}
+.approval-node{display:flex;gap:16px;position:relative}
+.approval-node:not(:last-child)::after{content:'';position:absolute;left:15px;top:36px;width:2px;height:calc(100% - 4px);background:var(--border)}
+.approval-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;z-index:1;border:2px solid var(--border)}
+.approval-dot.done{background:var(--accent);border-color:var(--accent);color:#fff}
+.approval-dot.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.approval-dot.pending{background:var(--surface-2);color:var(--text-3)}
+.approval-body{padding-bottom:20px;flex:1}
+.approval-title{font-size:13px;font-weight:600;color:var(--text-1)}
+.approval-meta{font-size:11px;color:var(--text-3);margin-top:2px}
+.approval-comment{font-size:12px;color:var(--text-2);background:var(--surface-2);border-radius:8px;padding:10px 12px;margin-top:8px;border:1px solid var(--border)}
+
+/* ===== CHARTS ===== */
+.chart-bar-wrap{display:flex;flex-direction:column;gap:10px}
+.chart-bar-item{display:flex;align-items:center;gap:12px}
+.chart-bar-label{font-size:12px;color:var(--text-2);width:90px;flex-shrink:0;font-weight:500}
+.chart-bar-track{flex:1;height:8px;background:var(--surface-3);border-radius:4px;overflow:hidden}
+.chart-bar-fill{height:100%;border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.chart-bar-val{font-size:12px;font-weight:600;color:var(--text-1);width:70px;text-align:right;flex-shrink:0}
+
+/* ===== TOGGLE ===== */
+.toggle-wrap{display:flex;align-items:center;gap:10px}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:var(--border-2);border-radius:11px;cursor:pointer;transition:.2s}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+input:checked + .toggle-slider{background:var(--accent)}
+input:checked + .toggle-slider::before{transform:translateX(18px)}
+
+/* ===== ALERT ===== */
+.alert{padding:12px 16px;border-radius:8px;font-size:13px;display:flex;align-items:flex-start;gap:10px;margin-bottom:16px}
+.alert-info{background:var(--blue-pale);color:var(--blue);border:1px solid rgba(29,111,235,.2)}
+.alert-success{background:#ECFDF5;color:#059669;border:1px solid rgba(5,150,105,.2)}
+.alert-warning{background:#FFFBEB;color:#D97706;border:1px solid rgba(217,119,6,.2)}
+.alert-error{background:#FEF2F2;color:var(--red);border:1px solid rgba(239,68,68,.2)}
+
+/* ===== ADMIN SAAS ===== */
+.plan-card{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);padding:28px;position:relative;overflow:hidden;transition:all .2s}
+.plan-card:hover{box-shadow:var(--shadow);border-color:var(--blue)}
+.plan-card.popular{border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,111,235,.15)}
+.plan-popular-badge{position:absolute;top:16px;right:16px;background:var(--blue);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
+.plan-price{font-size:34px;font-weight:800;color:var(--text-1);letter-spacing:-1px;margin:8px 0 4px}
+.plan-price sup{font-size:18px;font-weight:600;vertical-align:top;margin-top:8px;margin-right:2px}
+.plan-price sub{font-size:14px;font-weight:500;color:var(--text-3)}
+.plan-features{list-style:none;margin:16px 0;display:flex;flex-direction:column;gap:8px}
+.plan-features li{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px}
+.plan-features li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0}
+
+/* ===== PROGRESS ===== */
+.progress-bar{height:6px;background:var(--surface-3);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--accent));transition:width .5s}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .sidebar{position:fixed;left:-var(--sidebar-w);z-index:200;transition:left .25s}
+  .sidebar.open{left:0}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .form-row,.form-row-3{grid-template-columns:1fr}
+}
+
+/* ===== MISC ===== */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.section-title{font-size:18px;font-weight:700;color:var(--text-1);letter-spacing:-.3px}
+.section-sub{font-size:13px;color:var(--text-3);margin-top:2px}
+.empty-state{text-align:center;padding:48px 24px;color:var(--text-3)}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.empty-title{font-size:15px;font-weight:600;color:var(--text-2);margin-bottom:4px}
+.empty-sub{font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:20px;font-size:12px;color:var(--text-2);cursor:pointer}
+.chip.active{background:var(--blue-pale);border-color:var(--blue);color:var(--blue)}
+.divider{height:1px;background:var(--border);margin:20px 0}
+.text-right{text-align:right}
+.text-center{text-align:center}
+.flex{display:flex}
+.items-center{align-items:center}
+.justify-between{justify-content:space-between}
+.gap-8{gap:8px}
+.gap-12{gap:12px}
+.gap-16{gap:16px}
+.mt-4{margin-top:4px}
+.mt-8{margin-top:8px}
+.mt-16{margin-top:16px}
+.mt-24{margin-top:24px}
+.mb-16{margin-bottom:16px}
+.mb-24{margin-bottom:24px}
+.fw-600{font-weight:600}
+.fw-700{font-weight:700}
+.text-muted{color:var(--text-3)}
+.text-sm{font-size:12px}
+.col-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.col-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.page{display:none}
+.page.active{display:block}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ===== SIDEBAR ===== -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon">P</div>
+      <div>
+        <div class="logo-text">PayFlow Global</div>
+        <div class="logo-sub">Enterprise HR Suite</div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-plan">
+    <div>
+      <div class="plan-name">Joynit Digital Ltd.</div>
+    </div>
+    <div class="plan-badge">Pro</div>
+  </div>
+
+  <div class="sidebar-section">Main</div>
+  <div class="nav-item active" onclick="showPage('dashboard')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="11" y="2" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="2" y="11" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="11" y="11" width="7" height="7" rx="1.5" fill="currentColor"/></svg>
+    Dashboard
+  </div>
+  <div class="nav-item" onclick="showPage('employees')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 17c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Employees
+  </div>
+  <div class="nav-item" onclick="showPage('payroll')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><rect x="2.5" y="4.5" width="15" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 8.5h15M7 8.5v7" stroke="currentColor" stroke-width="1.5"/></svg>
+    Payroll Run
+    <span class="nav-badge">3</span>
+  </div>
+  <div class="nav-item" onclick="showPage('payslips')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><path d="M5 2h8l4 4v12a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5"/><path d="M13 2v4h4M7 10h6M7 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Payslips
+  </div>
+
+  <div class="sidebar-section">HR</div>
+  <div class="nav-item" onclick="showPage('leave')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><rect x="3" y="5" width="14" height="13" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h14M7 3v4M13 3v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Leave Management
+    <span class="nav-badge">5</span>
+  </div>
+  <div class="nav-item" onclick="showPage('onboarding')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><path d="M10 2L3 7v11h14V7L10 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 18v-5h6v5" stroke="currentColor" stroke-width="1.5"/></svg>
+    Onboarding
+  </div>
+  <div class="nav-item" onclick="showPage('approvals')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><path d="M5 10l3.5 3.5L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/></svg>
+    Approvals
+    <span class="nav-badge">7</span>
+  </div>
+
+  <div class="sidebar-section">Finance</div>
+  <div class="nav-item" onclick="showPage('tax')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><path d="M3 17L17 3M7 4H3v4M13 17h4v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Tax & Compliance
+  </div>
+  <div class="nav-item" onclick="showPage('reports')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><path d="M5 15V9M9 15V5M13 15v-5M17 15v-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Reports
+  </div>
+
+  <div class="sidebar-section">System</div>
+  <div class="nav-item" onclick="showPage('settings')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Settings
+  </div>
+  <div class="nav-item" onclick="showPage('admin')">
+    <svg class="nav-icon" viewBox="0 0 20 20" fill="none"><path d="M10 2l2 5h5l-4 3 1.5 5L10 12l-4.5 3L7 10 3 7h5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    Admin & Billing
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="user-block">
+      <div class="user-ava">JD</div>
+      <div>
+        <div class="user-name">Jane Doe</div>
+        <div class="user-role">HR Administrator</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+  <header class="header">
+    <div class="header-title" id="headerTitle">Dashboard</div>
+    <div class="header-search">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#94A3B8" stroke-width="1.5"/><path d="M10 10l2.5 2.5" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input placeholder="Search employees, payroll..." id="globalSearch">
+    </div>
+    <div class="country-sel" id="countrySelector" onclick="openCountryModal()">
+      <span class="country-flag" id="currentFlag">🇰🇪</span>
+      <span id="currentCountry">Kenya</span>
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+    <div class="header-btn" onclick="showPage('approvals')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM8 5v4M8 11v.5" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="notif-dot"></div>
+    </div>
+    <div class="header-btn" onclick="showPage('settings')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2" stroke="#475569" stroke-width="1.5"/><path d="M8 2v1M8 13v1M2 8h1M13 8h1M3.757 3.757l.707.707M11.536 11.536l.707.707M3.757 12.243l.707-.707M11.536 4.464l.707-.707" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="page active" id="page-dashboard">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Good morning, Jane 👋</div>
+          <div class="section-sub">Here's your payroll overview — January 2025</div>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn btn-secondary btn-sm" onclick="showPage('reports')">📊 Export Report</button>
+          <button class="btn btn-primary btn-sm" onclick="openRunPayrollModal()">▶ Run Payroll</button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-accent" style="background:linear-gradient(90deg,var(--blue),var(--blue-light))"></div>
+          <div class="stat-icon" style="background:var(--blue-pale)">👥</div>
+          <div class="stat-value">156</div>
+          <div class="stat-label">Total Employees</div>
+          <div class="stat-change up">↑ 12% from last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-accent" style="background:linear-gradient(90deg,var(--accent),#00e6a8)"></div>
+          <div class="stat-icon" style="background:#ECFDF5">💰</div>
+          <div class="stat-value" id="dashPayroll">KES 2.45M</div>
+          <div class="stat-label">This Month Payroll</div>
+          <div class="stat-change up">↑ 8.2% from last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-accent" style="background:linear-gradient(90deg,var(--amber),#fbbf24)"></div>
+          <div class="stat-icon" style="background:#FFFBEB">⏳</div>
+          <div class="stat-value">12</div>
+          <div class="stat-label">Pending Approvals</div>
+          <div class="stat-change down">↓ 3 from last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-accent" style="background:linear-gradient(90deg,var(--purple),#8b5cf6)"></div>
+          <div class="stat-icon" style="background:#F5F3FF">📅</div>
+          <div class="stat-value">Jan 31</div>
+          <div class="stat-label">Next Pay Date</div>
+          <div class="stat-change" style="color:var(--text-3)">5 days remaining</div>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Payroll Summary</div>
+              <div class="card-sub">Last 6 months</div>
+            </div>
+            <button class="btn btn-ghost btn-sm">View all</button>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-item"><div class="chart-bar-label">Aug 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:70%;background:linear-gradient(90deg,var(--blue),var(--blue-light))"></div></div><div class="chart-bar-val">KES 2.05M</div></div>
+              <div class="chart-bar-item"><div class="chart-bar-label">Sep 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:77%;background:linear-gradient(90deg,var(--blue),var(--blue-light))"></div></div><div class="chart-bar-val">KES 2.25M</div></div>
+              <div class="chart-bar-item"><div class="chart-bar-label">Oct 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:74%;background:linear-gradient(90deg,var(--blue),var(--blue-light))"></div></div><div class="chart-bar-val">KES 2.18M</div></div>
+              <div class="chart-bar-item"><div class="chart-bar-label">Nov 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:80%;background:linear-gradient(90deg,var(--blue),var(--blue-light))"></div></div><div class="chart-bar-val">KES 2.32M</div></div>
+              <div class="chart-bar-item"><div class="chart-bar-label">Dec 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:84%;background:linear-gradient(90deg,var(--blue),var(--blue-light))"></div></div><div class="chart-bar-val">KES 2.45M</div></div>
+              <div class="chart-bar-item"><div class="chart-bar-label">Jan 2025</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:84%;background:linear-gradient(90deg,var(--accent),#00e6a8)"></div></div><div class="chart-bar-val">KES 2.45M</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Department Breakdown</div>
+              <div class="card-sub">Headcount by dept</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-item"><div class="chart-bar-label">Engineering</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:55%;background:var(--blue)"></div></div><div class="chart-bar-val">48 staff</div></div>
+              <div class="chart-bar-item"><div class="chart-bar-label">Sales</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:35%;background:var(--accent)"></div></div><div class="chart-bar-val">32 staff</div></div>
+              <div class="chart-bar-item"><div class="chart-bar-label">Operations</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:25%;background:var(--amber)"></div></div><div class="chart-bar-val">22 staff</div></div>
+              <div class="chart-bar-item"><div class="chart-bar-label">HR</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:14%;background:var(--purple)"></div></div><div class="chart-bar-val">12 staff</div></div>
+              <div class="chart-bar-item"><div class="chart-bar-label">Finance</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:10%;background:var(--red)"></div></div><div class="chart-bar-val">10 staff</div></div>
+              <div class="chart-bar-item"><div class="chart-bar-label">Others</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:23%;background:var(--border-2)"></div></div><div class="chart-bar-val">32 staff</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-2 mt-24">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Recent Payroll Runs</div>
+            <button class="btn btn-ghost btn-sm" onclick="showPage('payroll')">View all</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Period</th><th>Employees</th><th>Gross</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr onclick="showPage('payslips')"><td class="fw-600">Jan 2025</td><td>156</td><td class="fw-600">KES 2.45M</td><td><span class="badge badge-amber">Processing</span></td></tr>
+                <tr onclick="showPage('payslips')"><td class="fw-600">Dec 2024</td><td>154</td><td class="fw-600">KES 2.38M</td><td><span class="badge badge-green">Completed</span></td></tr>
+                <tr onclick="showPage('payslips')"><td class="fw-600">Nov 2024</td><td>152</td><td class="fw-600">KES 2.32M</td><td><span class="badge badge-green">Completed</span></td></tr>
+                <tr onclick="showPage('payslips')"><td class="fw-600">Oct 2024</td><td>148</td><td class="fw-600">KES 2.18M</td><td><span class="badge badge-green">Completed</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Pending Actions</div>
+            <span class="badge badge-red">7 urgent</span>
+          </div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface-2);border-radius:8px;border:1px solid var(--border)">
+                <div><div style="font-size:13px;font-weight:600">Leave Request — John Kamau</div><div class="text-sm text-muted">Annual leave · 5 days</div></div>
+                <div class="flex gap-8"><button class="btn btn-success btn-sm" onclick="approveAction(this)">Approve</button><button class="btn btn-secondary btn-sm">Deny</button></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface-2);border-radius:8px;border:1px solid var(--border)">
+                <div><div style="font-size:13px;font-weight:600">Payroll Approval — Jan 2025</div><div class="text-sm text-muted">156 employees · KES 2.45M</div></div>
+                <button class="btn btn-primary btn-sm" onclick="showPage('approvals')">Review</button>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface-2);border-radius:8px;border:1px solid var(--border)">
+                <div><div style="font-size:13px;font-weight:600">New Hire Onboarding</div><div class="text-sm text-muted">Sarah Njoki · Software Engineer</div></div>
+                <button class="btn btn-secondary btn-sm" onclick="showPage('onboarding')">Complete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== EMPLOYEES ===== -->
+    <div class="page" id="page-employees">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Employee Directory</div>
+          <div class="section-sub">156 active employees across all departments</div>
+        </div>
+        <button class="btn btn-primary" onclick="openAddEmployeeModal()">+ Add Employee</button>
+      </div>
+
+      <div class="card mb-24">
+        <div class="card-body" style="padding:14px 16px">
+          <div class="flex gap-8" style="flex-wrap:wrap">
+            <div class="chip active" onclick="filterDept(this,'all')">All Departments</div>
+            <div class="chip" onclick="filterDept(this,'engineering')">Engineering (48)</div>
+            <div class="chip" onclick="filterDept(this,'sales')">Sales (32)</div>
+            <div class="chip" onclick="filterDept(this,'operations')">Operations (22)</div>
+            <div class="chip" onclick="filterDept(this,'hr')">HR (12)</div>
+            <div class="chip" onclick="filterDept(this,'finance')">Finance (10)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">All Employees</div>
+          <div class="flex gap-8">
+            <button class="btn btn-secondary btn-sm">⬇ Export CSV</button>
+            <button class="btn btn-secondary btn-sm">🔍 Filter</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="employeeTable">
+            <thead><tr><th>Employee</th><th>Employee ID</th><th>Job Title</th><th>Department</th><th>Basic Salary</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="employeeBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAYROLL RUN ===== -->
+    <div class="page" id="page-payroll">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Payroll Run</div>
+          <div class="section-sub">Process and manage monthly payroll with automated calculations</div>
+        </div>
+        <button class="btn btn-primary" onclick="openRunPayrollModal()">▶ Run New Payroll</button>
+      </div>
+
+      <div class="alert alert-info">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v4M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>January 2025 payroll is pending approval. <strong>3 employees</strong> have outstanding leave adjustments. <a href="#" onclick="showPage('approvals')" style="text-decoration:underline">Review now →</a></span>
+      </div>
+
+      <div class="card mb-24">
+        <div class="card-header">
+          <div class="card-title">Current Payroll — January 2025</div>
+          <div class="flex gap-8">
+            <span class="badge badge-amber">Pending Approval</span>
+            <button class="btn btn-secondary btn-sm" onclick="openRunPayrollModal()">Recalculate</button>
+            <button class="btn btn-primary btn-sm" onclick="submitForApproval()">Submit for Approval</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="payrollTable">
+            <thead><tr><th>Employee</th><th>Job Title</th><th>Days Worked</th><th>Basic Salary</th><th>Allowances</th><th>Gross</th><th>Tax</th><th>NHIF/NSSF</th><th>Net Pay</th><th>Status</th><th></th></tr></thead>
+            <tbody id="payrollBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Payroll Summary</div></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div class="flex justify-between"><span class="text-muted">Total Employees</span><span class="fw-600">156</span></div>
+              <div class="flex justify-between"><span class="text-muted">Total Gross</span><span class="fw-600" id="totalGross">KES 2,450,000</span></div>
+              <div class="flex justify-between"><span class="text-muted">Total PAYE Tax</span><span class="fw-600" id="totalTax">KES 385,000</span></div>
+              <div class="flex justify-between"><span class="text-muted">Total NHIF</span><span class="fw-600">KES 49,200</span></div>
+              <div class="flex justify-between"><span class="text-muted">Total NSSF</span><span class="fw-600">KES 31,200</span></div>
+              <div class="divider"></div>
+              <div class="flex justify-between"><span class="fw-600" style="font-size:15px">Total Net Pay</span><span class="fw-700" style="font-size:16px;color:var(--accent)" id="totalNet">KES 1,984,600</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Payroll History</div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Period</th><th>Staff</th><th>Net</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Dec 2024</td><td>154</td><td>KES 1.92M</td><td><span class="badge badge-green">Done</span></td></tr>
+                <tr><td>Nov 2024</td><td>152</td><td>KES 1.88M</td><td><span class="badge badge-green">Done</span></td></tr>
+                <tr><td>Oct 2024</td><td>148</td><td>KES 1.77M</td><td><span class="badge badge-green">Done</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAYSLIPS ===== -->
+    <div class="page" id="page-payslips">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Payslips</div>
+          <div class="section-sub">Generate, view and print employee payslips</div>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn btn-secondary" onclick="bulkDownload()">⬇ Bulk Download</button>
+          <button class="btn btn-primary" onclick="generateAllPayslips()">Generate All Payslips</button>
+        </div>
+      </div>
+
+      <div class="col-2 mb-24">
+        <div class="card">
+          <div class="card-body" style="padding:14px 16px">
+            <div class="form-row" style="gap:12px;align-items:flex-end">
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Employee</label>
+                <select class="form-control" id="payslipEmployee" onchange="generatePayslip()">
+                  <option value="">Select employee...</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Pay Period</label>
+                <select class="form-control" id="payslipPeriod" onchange="generatePayslip()">
+                  <option value="Jan 2025">January 2025</option>
+                  <option value="Dec 2024">December 2024</option>
+                  <option value="Nov 2024">November 2024</option>
+                  <option value="Oct 2024">October 2024</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="generatePayslip()" style="height:38px">Generate</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body" style="padding:14px 16px;display:flex;align-items:center;gap:16px">
+            <div style="flex:1">
+              <div style="font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:2px">Generated this month</div>
+              <div style="font-size:22px;font-weight:700;color:var(--text-1)">154 / 156</div>
+              <div class="progress-bar mt-4"><div class="progress-fill" style="width:98%"></div></div>
+            </div>
+            <button class="btn btn-secondary" onclick="printPayslip()">🖨 Print</button>
+            <button class="btn btn-secondary" onclick="downloadPayslipPDF()">⬇ PDF</button>
+            <button class="btn btn-primary btn-sm" onclick="emailPayslip()">✉ Email</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYSLIP DOCUMENT -->
+      <div id="payslipContainer">
+        <div class="payslip-doc" id="payslipDoc">
+          <div class="payslip-header">
+            <div>
+              <div class="payslip-company">Joynit Digital Ltd.</div>
+              <div class="payslip-company-sub">P.O. Box 12345, Nairobi, Kenya · KRA PIN: A000123456Z</div>
+              <div class="payslip-company-sub" id="psCompanyAddress">Tel: +254 700 000 000 · info@joynit.co.ke</div>
+            </div>
+            <div class="payslip-title-block">
+              <div class="payslip-title">PAYSLIP</div>
+              <div class="payslip-period" id="psPeriod">January 2025</div>
+              <div class="payslip-period" style="margin-top:4px" id="psPayDate">Pay Date: 31 January 2025</div>
+              <div style="margin-top:8px"><span class="badge badge-green">Paid</span></div>
+            </div>
+          </div>
+          <div class="payslip-info-grid">
+            <div class="payslip-info-group">
+              <div class="payslip-info-label">Employee Details</div>
+              <div class="payslip-info-row"><span class="payslip-info-key">Name</span><span class="payslip-info-val" id="psName">John Kamau</span></div>
+              <div class="payslip-info-row"><span class="payslip-info-key">Employee ID</span><span class="payslip-info-val" id="psId">EMP-001</span></div>
+              <div class="payslip-info-row"><span class="payslip-info-key">Job Title</span><span class="payslip-info-val" id="psTitle">Senior Software Engineer</span></div>
+              <div class="payslip-info-row"><span class="payslip-info-key">Department</span><span class="payslip-info-val" id="psDept">Engineering</span></div>
+              <div class="payslip-info-row"><span class="payslip-info-key">KRA PIN</span><span class="payslip-info-val" id="psKRA">A001234567B</span></div>
+              <div class="payslip-info-row"><span class="payslip-info-key">NHIF No.</span><span class="payslip-info-val" id="psNHIF">00123456</span></div>
+            </div>
+            <div class="payslip-info-group">
+              <div class="payslip-info-label">Attendance Summary</div>
+              <div class="payslip-info-row"><span class="payslip-info-key">Working Days</span><span class="payslip-info-val" id="psWorkDays">23</span></div>
+              <div class="payslip-info-row"><span class="payslip-info-key">Days Worked</span><span class="payslip-info-val" id="psDaysWorked">21</span></div>
+              <div class="payslip-info-row"><span class="payslip-info-key">Leave Taken</span><span class="payslip-info-val" id="psLeave">2 days (Annual)</span></div>
+              <div class="payslip-info-row"><span class="payslip-info-key">Leave Balance</span><span class="payslip-info-val">19 days</span></div>
+              <div class="payslip-info-label" style="margin-top:12px">Bank Details</div>
+              <div class="payslip-info-row"><span class="payslip-info-key">Bank</span><span class="payslip-info-val" id="psBank">Equity Bank</span></div>
+              <div class="payslip-info-row"><span class="payslip-info-key">Account</span><span class="payslip-info-val" id="psAccount">0200000001</span></div>
+            </div>
+          </div>
+          <table class="payslip-earnings-table">
+            <thead><tr><th>Earnings</th><th>Description</th><th>Amount</th><th>Deductions</th><th>Amount</th></tr></thead>
+            <tbody id="psEarningsBody">
+              <tr><td>Basic Salary</td><td>Monthly basic</td><td id="psBasic">KES 85,000</td><td>PAYE Tax</td><td id="psPAYE">KES 18,500</td></tr>
+              <tr><td>House Allowance</td><td>15% of basic</td><td id="psHouseAllow">KES 12,750</td><td>NHIF</td><td id="psNHIFDed">KES 1,700</td></tr>
+              <tr><td>Transport Allow.</td><td>Monthly</td><td id="psTransport">KES 4,000</td><td>NSSF</td><td id="psNSSF">KES 1,080</td></tr>
+              <tr><td>Medical Allow.</td><td>Monthly</td><td id="psMedical">KES 3,000</td><td>Loan Deduction</td><td id="psLoan">KES 0</td></tr>
+            </tbody>
+            <tfoot>
+              <tr class="payslip-total-row"><td colspan="2">Total Gross Earnings</td><td id="psGross">KES 104,750</td><td>Total Deductions</td><td id="psDedTotal">KES 21,280</td></tr>
+            </tfoot>
+          </table>
+          <div class="payslip-net-box">
+            <div><div class="payslip-net-label">NET PAY (Take Home)</div><div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">After all deductions</div></div>
+            <div class="payslip-net-amount" id="psNet">KES 83,470</div>
+          </div>
+          <div class="payslip-footer">
+            This is a computer-generated payslip and requires no signature. Queries: hr@joynit.co.ke<br>
+            PayFlow Global · Powered by Joynit Digital Ltd. · <span id="psYear">2025</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAX & COMPLIANCE ===== -->
+    <div class="page" id="page-tax">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Tax & Compliance</div>
+          <div class="section-sub">Auto-populated rates for <span id="taxCountryName">Kenya</span> · Updated Jan 2025</div>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn btn-secondary" onclick="openCountryModal()">🌍 Change Country</button>
+          <button class="btn btn-primary">Generate Tax Returns</button>
+        </div>
+      </div>
+
+      <div class="alert alert-success">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5 8l2.5 2.5L11 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Tax rates automatically updated for <strong id="taxCountryAlert">Kenya</strong>. All calculations comply with <strong id="taxAuthority">KRA (Kenya Revenue Authority)</strong> guidelines effective Jan 2025.</span>
+      </div>
+
+      <div class="col-2 mb-24">
+        <div class="card">
+          <div class="card-header"><div class="card-title">PAYE Tax Bands</div><span class="badge badge-blue" id="taxCurrency">KES</span></div>
+          <div class="card-body" id="taxBandsContainer">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Statutory Deductions</div></div>
+          <div class="card-body" id="statutoryContainer">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Upcoming Filing Deadlines</div><span class="badge badge-red">2 urgent</span></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:12px" id="deadlinesList"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Tax Calculator</div></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Monthly Gross Salary</label>
+              <input type="number" class="form-control" id="taxCalcInput" placeholder="Enter amount..." oninput="calculateTax()">
+            </div>
+            <div id="taxCalcResult" style="display:none">
+              <div class="divider"></div>
+              <div style="display:flex;flex-direction:column;gap:8px" id="taxCalcBreakdown"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== LEAVE MANAGEMENT ===== -->
+    <div class="page" id="page-leave">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Leave Management</div>
+          <div class="section-sub">Track, approve and manage employee leave requests</div>
+        </div>
+        <button class="btn btn-primary" onclick="openLeaveModal()">+ Request Leave</button>
+      </div>
+
+      <div class="col-3 mb-24">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#ECFDF5">✅</div>
+          <div class="stat-value" style="color:var(--accent)">23</div>
+          <div class="stat-label">On Leave Today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#FFFBEB">⏳</div>
+          <div class="stat-value" style="color:var(--amber)">5</div>
+          <div class="stat-label">Pending Requests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--blue-pale)">📊</div>
+          <div class="stat-value" style="color:var(--blue)">21</div>
+          <div class="stat-label">Avg Leave Balance</div>
+        </div>
+      </div>
+
+      <div class="col-2 mb-24">
+        <div class="leave-cal">
+          <div class="leave-cal-header">
+            <button class="btn btn-ghost btn-sm" onclick="prevMonth()">‹</button>
+            <div style="font-size:14px;font-weight:600" id="calMonthLabel">January 2025</div>
+            <button class="btn btn-ghost btn-sm" onclick="nextMonth()">›</button>
+          </div>
+          <div class="leave-cal-grid">
+            <div class="cal-day-header">Sun</div><div class="cal-day-header">Mon</div><div class="cal-day-header">Tue</div><div class="cal-day-header">Wed</div><div class="cal-day-header">Thu</div><div class="cal-day-header">Fri</div><div class="cal-day-header">Sat</div>
+            <div id="calDays"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Leave Balances</div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Type</th><th>Entitled</th><th>Used</th><th>Balance</th></tr></thead>
+              <tbody>
+                <tr><td>Annual Leave</td><td>21</td><td>2</td><td class="fw-600" style="color:var(--accent)">19</td></tr>
+                <tr><td>Sick Leave</td><td>10</td><td>1</td><td class="fw-600" style="color:var(--accent)">9</td></tr>
+                <tr><td>Maternity</td><td>90</td><td>0</td><td class="fw-600" style="color:var(--accent)">90</td></tr>
+                <tr><td>Paternity</td><td>14</td><td>0</td><td class="fw-600" style="color:var(--accent)">14</td></tr>
+                <tr><td>Study Leave</td><td>5</td><td>0</td><td class="fw-600" style="color:var(--accent)">5</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">Leave Requests</div>
+          <div class="flex gap-8">
+            <div class="tabs">
+              <div class="tab active" onclick="filterLeave(this,'all')">All</div>
+              <div class="tab" onclick="filterLeave(this,'pending')">Pending</div>
+              <div class="tab" onclick="filterLeave(this,'approved')">Approved</div>
+              <div class="tab" onclick="filterLeave(this,'rejected')">Rejected</div>
+            </div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Employee</th><th>Leave Type</th><th>From</th><th>To</th><th>Days</th><th>Reason</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="leaveBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ONBOARDING ===== -->
+    <div class="page" id="page-onboarding">
+      <div class="section-header">
+        <div>
+          <div class="section-title">HR Onboarding</div>
+          <div class="section-sub">Automated onboarding workflow for new hires</div>
+        </div>
+        <button class="btn btn-primary" onclick="openOnboardingModal()">+ Start Onboarding</button>
+      </div>
+
+      <div class="col-2 mb-24">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Active Onboarding</div><span class="badge badge-blue">3 in progress</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:16px" id="onboardingList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Onboarding Checklist Template</div></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:10px" id="checklistTemplate">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== APPROVALS ===== -->
+    <div class="page" id="page-approvals">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Approvals & Workflow</div>
+          <div class="section-sub">Review and approve payroll, leave and HR requests</div>
+        </div>
+        <span class="badge badge-red" style="font-size:13px;padding:6px 14px">7 Pending</span>
+      </div>
+
+      <div class="tabs mb-24" style="width:fit-content">
+        <div class="tab active" onclick="switchApprovalTab(this,'payroll')">Payroll (2)</div>
+        <div class="tab" onclick="switchApprovalTab(this,'leave')">Leave (5)</div>
+        <div class="tab" onclick="switchApprovalTab(this,'expense')">Expense (0)</div>
+        <div class="tab" onclick="switchApprovalTab(this,'hr')">HR Changes (1)</div>
+      </div>
+
+      <div id="approvalContent">
+        <div class="card mb-16">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Payroll Approval — January 2025</div>
+              <div class="card-sub">Submitted by: Jane Doe · Jan 25, 2025 09:30 AM</div>
+            </div>
+            <span class="badge badge-amber">Awaiting Manager</span>
+          </div>
+          <div class="card-body">
+            <div class="workflow-steps">
+              <div class="wf-step done"><div class="wf-step-num">✓</div><div><div class="wf-step-label">Entry (HR)</div></div></div>
+              <div class="wf-line done"></div>
+              <div class="wf-step done"><div class="wf-step-num">✓</div><div><div class="wf-step-label">Review</div></div></div>
+              <div class="wf-line"></div>
+              <div class="wf-step active"><div class="wf-step-num">3</div><div><div class="wf-step-label">Manager Approval</div></div></div>
+              <div class="wf-line"></div>
+              <div class="wf-step"><div class="wf-step-num">4</div><div><div class="wf-step-label">Finance Sign-off</div></div></div>
+              <div class="wf-line"></div>
+              <div class="wf-step"><div class="wf-step-num">5</div><div><div class="wf-step-label">Payment</div></div></div>
+            </div>
+            <div class="approval-track mt-16">
+              <div class="approval-node">
+                <div class="approval-dot done">✓</div>
+                <div class="approval-body">
+                  <div class="approval-title">HR Entry — Jane Doe</div>
+                  <div class="approval-meta">Jan 24, 2025 · 156 employees processed · KES 2,450,000 gross</div>
+                  <div class="approval-comment">All employee records verified. Leave deductions applied for 23 employees. Payroll ready for review.</div>
+                </div>
+              </div>
+              <div class="approval-node">
+                <div class="approval-dot done">✓</div>
+                <div class="approval-body">
+                  <div class="approval-title">Review — Finance Team</div>
+                  <div class="approval-meta">Jan 25, 2025 · Auto-reviewed by system</div>
+                  <div class="approval-comment">Tax calculations verified against KRA tables. NHIF and NSSF contributions confirmed. No discrepancies found.</div>
+                </div>
+              </div>
+              <div class="approval-node">
+                <div class="approval-dot active">3</div>
+                <div class="approval-body">
+                  <div class="approval-title">Manager Approval — Awaiting</div>
+                  <div class="approval-meta">Pending · Assigned to: Daniel Mwangi (CFO)</div>
+                  <textarea class="form-control mt-8" rows="2" placeholder="Add approval comment..." id="approvalComment" style="font-size:13px"></textarea>
+                  <div class="flex gap-8 mt-8">
+                    <button class="btn btn-success" onclick="approvePayroll()">✓ Approve Payroll</button>
+                    <button class="btn btn-danger" onclick="rejectPayroll()">✗ Reject</button>
+                    <button class="btn btn-secondary">Request Changes</button>
+                  </div>
+                </div>
+              </div>
+              <div class="approval-node">
+                <div class="approval-dot pending">4</div>
+                <div class="approval-body">
+                  <div class="approval-title">Finance Sign-off</div>
+                  <div class="approval-meta">Not started</div>
+                </div>
+              </div>
+              <div class="approval-node" style="padding-bottom:0">
+                <div class="approval-dot pending">5</div>
+                <div class="approval-body">
+                  <div class="approval-title">Payment Processing</div>
+                  <div class="approval-meta">Bank transfer — EFT batch</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== REPORTS ===== -->
+    <div class="page" id="page-reports">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Reports & Analytics</div>
+          <div class="section-sub">Comprehensive payroll and HR reporting</div>
+        </div>
+        <button class="btn btn-primary" onclick="exportReport()">⬇ Export Report</button>
+      </div>
+
+      <div class="col-3 mb-24">
+        <div class="card" style="cursor:pointer;transition:box-shadow .2s" onmouseenter="this.style.boxShadow='var(--shadow)'" onmouseleave="this.style.boxShadow=''">
+          <div class="card-body" style="text-align:center;padding:28px">
+            <div style="font-size:36px;margin-bottom:12px">💰</div>
+            <div style="font-weight:700;font-size:15px;color:var(--text-1);margin-bottom:4px">Payroll Summary</div>
+            <div class="text-sm text-muted mb-16">Monthly payroll costs by dept</div>
+            <button class="btn btn-primary btn-sm">Generate</button>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;transition:box-shadow .2s" onmouseenter="this.style.boxShadow='var(--shadow)'" onmouseleave="this.style.boxShadow=''">
+          <div class="card-body" style="text-align:center;padding:28px">
+            <div style="font-size:36px;margin-bottom:12px">📋</div>
+            <div style="font-weight:700;font-size:15px;color:var(--text-1);margin-bottom:4px">Leave Report</div>
+            <div class="text-sm text-muted mb-16">Leave balances and utilization</div>
+            <button class="btn btn-primary btn-sm">Generate</button>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;transition:box-shadow .2s" onmouseenter="this.style.boxShadow='var(--shadow)'" onmouseleave="this.style.boxShadow=''">
+          <div class="card-body" style="text-align:center;padding:28px">
+            <div style="font-size:36px;margin-bottom:12px">🏛</div>
+            <div style="font-weight:700;font-size:15px;color:var(--text-1);margin-bottom:4px">Tax & Statutory</div>
+            <div class="text-sm text-muted mb-16">PAYE, NHIF, NSSF returns</div>
+            <button class="btn btn-primary btn-sm">Generate</button>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;transition:box-shadow .2s" onmouseenter="this.style.boxShadow='var(--shadow)'" onmouseleave="this.style.boxShadow=''">
+          <div class="card-body" style="text-align:center;padding:28px">
+            <div style="font-size:36px;margin-bottom:12px">👥</div>
+            <div style="font-weight:700;font-size:15px;color:var(--text-1);margin-bottom:4px">Headcount Report</div>
+            <div class="text-sm text-muted mb-16">Staff movement and turnover</div>
+            <button class="btn btn-primary btn-sm">Generate</button>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;transition:box-shadow .2s" onmouseenter="this.style.boxShadow='var(--shadow)'" onmouseleave="this.style.boxShadow=''">
+          <div class="card-body" style="text-align:center;padding:28px">
+            <div style="font-size:36px;margin-bottom:12px">📊</div>
+            <div style="font-weight:700;font-size:15px;color:var(--text-1);margin-bottom:4px">Cost Analysis</div>
+            <div class="text-sm text-muted mb-16">Salary cost vs budget</div>
+            <button class="btn btn-primary btn-sm">Generate</button>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;transition:box-shadow .2s" onmouseenter="this.style.boxShadow='var(--shadow)'" onmouseleave="this.style.boxShadow=''">
+          <div class="card-body" style="text-align:center;padding:28px">
+            <div style="font-size:36px;margin-bottom:12px">🧾</div>
+            <div style="font-weight:700;font-size:15px;color:var(--text-1);margin-bottom:4px">Audit Trail</div>
+            <div class="text-sm text-muted mb-16">All payroll changes log</div>
+            <button class="btn btn-primary btn-sm">Generate</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">Monthly Payroll Trend</div></div>
+        <div class="card-body">
+          <div class="chart-bar-wrap">
+            <div class="chart-bar-item"><div class="chart-bar-label">Jul 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:68%;background:var(--blue)"></div></div><div class="chart-bar-val">KES 2.05M</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Aug 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:70%;background:var(--blue)"></div></div><div class="chart-bar-val">KES 2.10M</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Sep 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:75%;background:var(--blue)"></div></div><div class="chart-bar-val">KES 2.25M</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Oct 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:73%;background:var(--blue)"></div></div><div class="chart-bar-val">KES 2.18M</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Nov 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:77%;background:var(--blue)"></div></div><div class="chart-bar-val">KES 2.32M</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Dec 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:79%;background:var(--blue)"></div></div><div class="chart-bar-val">KES 2.38M</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Jan 2025</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:82%;background:linear-gradient(90deg,var(--blue),var(--accent))"></div></div><div class="chart-bar-val">KES 2.45M</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SETTINGS ===== -->
+    <div class="page" id="page-settings">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Settings</div>
+          <div class="section-sub">Company, payroll and system configuration</div>
+        </div>
+        <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+      </div>
+
+      <div class="tabs mb-24" style="width:fit-content" id="settingsTabs">
+        <div class="tab active" onclick="switchSettingsTab(this,'company')">Company</div>
+        <div class="tab" onclick="switchSettingsTab(this,'payroll_settings')">Payroll</div>
+        <div class="tab" onclick="switchSettingsTab(this,'users')">Users & Roles</div>
+        <div class="tab" onclick="switchSettingsTab(this,'notifications')">Notifications</div>
+        <div class="tab" onclick="switchSettingsTab(this,'integrations')">Integrations</div>
+      </div>
+
+      <div id="settings-company">
+        <div class="col-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">Company Information</div></div>
+            <div class="card-body">
+              <div class="form-group"><label class="form-label">Company Name<span>*</span></label><input class="form-control" value="Joynit Digital Ltd."></div>
+              <div class="form-row">
+                <div class="form-group"><label class="form-label">KRA PIN</label><input class="form-control" value="A000123456Z"></div>
+                <div class="form-group"><label class="form-label">Registration Number</label><input class="form-control" value="CPR/2018/123456"></div>
+              </div>
+              <div class="form-group"><label class="form-label">Physical Address</label><textarea class="form-control" rows="2">P.O. Box 12345, Nairobi, Kenya</textarea></div>
+              <div class="form-row">
+                <div class="form-group"><label class="form-label">Phone</label><input class="form-control" value="+254 700 000 000"></div>
+                <div class="form-group"><label class="form-label">Email</label><input class="form-control" value="info@joynit.co.ke"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Payroll Configuration</div></div>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group"><label class="form-label">Pay Frequency</label><select class="form-control"><option selected>Monthly</option><option>Bi-weekly</option><option>Weekly</option></select></div>
+                <div class="form-group"><label class="form-label">Pay Date</label><select class="form-control"><option selected>Last day of month</option><option>25th of month</option><option>Custom</option></select></div>
+              </div>
+              <div class="form-group"><label class="form-label">Currency</label><select class="form-control" id="currencySelect" onchange="updateCurrency()"><option value="KES" selected>KES — Kenyan Shilling</option><option value="USD">USD — US Dollar</option><option value="NGN">NGN — Nigerian Naira</option><option value="ZAR">ZAR — South African Rand</option><option value="GHS">GHS — Ghanaian Cedi</option><option value="UGX">UGX — Ugandan Shilling</option></select></div>
+              <div class="form-group"><label class="form-label">Working Days per Month</label><select class="form-control"><option selected>Dynamic (auto-calculate)</option><option>22 fixed</option><option>21 fixed</option></select></div>
+              <div class="form-group">
+                <label class="form-label">House Allowance (%)</label>
+                <input type="number" class="form-control" value="15" placeholder="% of basic salary">
+                <div class="form-hint">Applied as % of basic salary</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-24">
+          <div class="card-header"><div class="card-title">Leave Policy</div></div>
+          <div class="card-body">
+            <div class="form-row-3">
+              <div class="form-group"><label class="form-label">Annual Leave (days)</label><input type="number" class="form-control" value="21"></div>
+              <div class="form-group"><label class="form-label">Sick Leave (days)</label><input type="number" class="form-control" value="10"></div>
+              <div class="form-group"><label class="form-label">Maternity Leave (days)</label><input type="number" class="form-control" value="90"></div>
+              <div class="form-group"><label class="form-label">Paternity Leave (days)</label><input type="number" class="form-control" value="14"></div>
+              <div class="form-group"><label class="form-label">Study Leave (days)</label><input type="number" class="form-control" value="5"></div>
+              <div class="form-group"><label class="form-label">Compassionate Leave</label><input type="number" class="form-control" value="3"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-24">
+          <div class="card-header"><div class="card-title">Notification & Workflow Settings</div></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div class="flex justify-between items-center">
+                <div><div style="font-size:13px;font-weight:600">Require manager approval for payroll</div><div class="text-sm text-muted">Payroll must be approved before processing</div></div>
+                <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+              </div>
+              <div class="flex justify-between items-center">
+                <div><div style="font-size:13px;font-weight:600">Auto-send payslips by email</div><div class="text-sm text-muted">Send payslips to employees after approval</div></div>
+                <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+              </div>
+              <div class="flex justify-between items-center">
+                <div><div style="font-size:13px;font-weight:600">Leave approval notifications</div><div class="text-sm text-muted">Email managers when leave is requested</div></div>
+                <label class="toggle"><input type="checkbox" checked><div class="toggle-slider"></div></label>
+              </div>
+              <div class="flex justify-between items-center">
+                <div><div style="font-size:13px;font-weight:600">Two-step payroll verification</div><div class="text-sm text-muted">Require Finance sign-off after manager approval</div></div>
+                <label class="toggle"><input type="checkbox"><div class="toggle-slider"></div></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="settings-payroll_settings" style="display:none"><div class="alert alert-info">Configure detailed payroll rules, allowances, and deductions in this section.</div></div>
+      <div id="settings-users" style="display:none">
+        <div class="card">
+          <div class="card-header"><div class="card-title">User Roles & Permissions</div><button class="btn btn-primary btn-sm">+ Invite User</button></div>
+          <div class="table-wrap">
+            <table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td class="fw-600">Jane Doe</td><td>jane@joynit.co.ke</td><td><span class="badge badge-purple">HR Admin</span></td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-ghost btn-sm">Edit</button></td></tr>
+              <tr><td class="fw-600">Daniel Mwangi</td><td>daniel@joynit.co.ke</td><td><span class="badge badge-blue">Manager</span></td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-ghost btn-sm">Edit</button></td></tr>
+              <tr><td class="fw-600">Alice Otieno</td><td>alice@joynit.co.ke</td><td><span class="badge badge-amber">Finance</span></td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-ghost btn-sm">Edit</button></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+      <div id="settings-notifications" style="display:none"><div class="alert alert-info">Email and push notification settings.</div></div>
+      <div id="settings-integrations" style="display:none"><div class="alert alert-info">Connect to accounting software, banks, and HR tools.</div></div>
+    </div>
+
+    <!-- ===== ADMIN & BILLING ===== -->
+    <div class="page" id="page-admin">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Admin & Billing Dashboard</div>
+          <div class="section-sub">SaaS management — subscriptions, tenants, and revenue</div>
+        </div>
+        <span class="badge badge-green" style="font-size:13px;padding:6px 14px">Super Admin</span>
+      </div>
+
+      <div class="alert alert-warning">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3.5M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>You are viewing the <strong>Super Admin</strong> panel. Changes here affect all tenant accounts on the platform.</span>
+      </div>
+
+      <div class="stats-grid mb-24">
+        <div class="stat-card"><div class="stat-accent" style="background:var(--blue)"></div><div class="stat-icon" style="background:var(--blue-pale)">🏢</div><div class="stat-value">47</div><div class="stat-label">Active Tenants</div><div class="stat-change up">↑ 8 this month</div></div>
+        <div class="stat-card"><div class="stat-accent" style="background:var(--accent)"></div><div class="stat-icon" style="background:#ECFDF5">💳</div><div class="stat-value">$12,400</div><div class="stat-label">MRR</div><div class="stat-change up">↑ 22% MoM</div></div>
+        <div class="stat-card"><div class="stat-accent" style="background:var(--amber)"></div><div class="stat-icon" style="background:#FFFBEB">⚡</div><div class="stat-value">3</div><div class="stat-label">Trials Expiring</div><div class="stat-change down">Needs conversion</div></div>
+        <div class="stat-card"><div class="stat-accent" style="background:var(--purple)"></div><div class="stat-icon" style="background:#F5F3FF">📈</div><div class="stat-value">$148.8K</div><div class="stat-label">ARR</div><div class="stat-change up">↑ 22% YoY</div></div>
+      </div>
+
+      <div class="col-2 mb-24">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Subscription Plans</div><button class="btn btn-secondary btn-sm">Edit Plans</button></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:16px">
+            <div class="plan-card">
+              <div class="plan-popular-badge" style="background:var(--border-2);color:var(--text-2)">Starter</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text-2)">Starter Plan</div>
+              <div class="plan-price"><sup>$</sup>19<sub>/mo</sub></div>
+              <div class="text-sm text-muted">Up to 25 employees</div>
+              <div class="flex justify-between items-center mt-8"><span class="text-sm text-muted">12 tenants</span><span class="badge badge-green">Active</span></div>
+            </div>
+            <div class="plan-card popular">
+              <div class="plan-popular-badge">Most Popular</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text-2)">Professional Plan</div>
+              <div class="plan-price"><sup>$</sup>79<sub>/mo</sub></div>
+              <div class="text-sm text-muted">Up to 200 employees</div>
+              <div class="flex justify-between items-center mt-8"><span class="text-sm text-muted">28 tenants</span><span class="badge badge-green">Active</span></div>
+            </div>
+            <div class="plan-card">
+              <div style="font-size:13px;font-weight:600;color:var(--text-2)">Enterprise Plan</div>
+              <div class="plan-price"><sup>$</sup>299<sub>/mo</sub></div>
+              <div class="text-sm text-muted">Unlimited employees</div>
+              <div class="flex justify-between items-center mt-8"><span class="text-sm text-muted">7 tenants</span><span class="badge badge-green">Active</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Active Tenants</div><button class="btn btn-secondary btn-sm">+ Add Tenant</button></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Company</th><th>Plan</th><th>Staff</th><th>MRR</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td class="fw-600">Joynit Digital</td><td>Enterprise</td><td>156</td><td>$299</td><td><span class="badge badge-green">Active</span></td></tr>
+                <tr><td class="fw-600">Savanna Tech</td><td>Professional</td><td>87</td><td>$79</td><td><span class="badge badge-green">Active</span></td></tr>
+                <tr><td class="fw-600">Nairobi Logistics</td><td>Professional</td><td>112</td><td>$79</td><td><span class="badge badge-green">Active</span></td></tr>
+                <tr><td class="fw-600">AgriTech Kenya</td><td>Starter</td><td>18</td><td>$19</td><td><span class="badge badge-amber">Trial</span></td></tr>
+                <tr><td class="fw-600">MediCare Clinics</td><td>Professional</td><td>45</td><td>$79</td><td><span class="badge badge-amber">Trial</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">Revenue Growth</div></div>
+        <div class="card-body">
+          <div class="chart-bar-wrap">
+            <div class="chart-bar-item"><div class="chart-bar-label">Aug 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:55%;background:var(--blue)"></div></div><div class="chart-bar-val">$6,840</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Sep 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:62%;background:var(--blue)"></div></div><div class="chart-bar-val">$7,700</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Oct 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:68%;background:var(--blue)"></div></div><div class="chart-bar-val">$8,480</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Nov 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:75%;background:var(--blue)"></div></div><div class="chart-bar-val">$9,320</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Dec 2024</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:81%;background:var(--blue)"></div></div><div class="chart-bar-val">$10,080</div></div>
+            <div class="chart-bar-item"><div class="chart-bar-label">Jan 2025</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:100%;background:linear-gradient(90deg,var(--blue),var(--accent))"></div></div><div class="chart-bar-val">$12,400</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ===== MODALS ===== -->
+
+<!-- Add Employee Modal -->
+<div class="modal-overlay" id="addEmployeeModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <div class="modal-title">Add New Employee</div>
+      <button class="modal-close" onclick="closeModal('addEmployeeModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-section-title">👤 Personal Information</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">First Name<span>*</span></label><input class="form-control" id="empFirstName" placeholder="e.g. John"></div>
+        <div class="form-group"><label class="form-label">Last Name<span>*</span></label><input class="form-control" id="empLastName" placeholder="e.g. Kamau"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">National ID / Passport</label><input class="form-control" id="empNatId" placeholder="ID number"></div>
+        <div class="form-group"><label class="form-label">Date of Birth</label><input type="date" class="form-control" id="empDOB"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Email<span>*</span></label><input type="email" class="form-control" id="empEmail" placeholder="john@company.com"></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="empPhone" placeholder="+254..."></div>
+      </div>
+      <div class="form-section-title">💼 Employment Details</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Job Title<span>*</span></label>
+          <select class="form-control" id="empJobTitle">
+            <option value="">Select job title...</option>
+            <optgroup label="Executive">
+              <option>Chief Executive Officer (CEO)</option>
+              <option>Chief Financial Officer (CFO)</option>
+              <option>Chief Operating Officer (COO)</option>
+              <option>Chief Technology Officer (CTO)</option>
+              <option>Managing Director</option>
+            </optgroup>
+            <optgroup label="Management">
+              <option>General Manager</option>
+              <option>Operations Manager</option>
+              <option>HR Manager</option>
+              <option>Finance Manager</option>
+              <option>Sales Manager</option>
+              <option>Project Manager</option>
+            </optgroup>
+            <optgroup label="Engineering">
+              <option>Senior Software Engineer</option>
+              <option>Software Engineer</option>
+              <option>Junior Software Engineer</option>
+              <option>DevOps Engineer</option>
+              <option>Data Engineer</option>
+              <option>Product Designer (UI/UX)</option>
+              <option>QA Engineer</option>
+            </optgroup>
+            <optgroup label="Finance & Accounting">
+              <option>Senior Accountant</option>
+              <option>Accountant</option>
+              <option>Accounts Assistant</option>
+              <option>Financial Analyst</option>
+              <option>Payroll Officer</option>
+            </optgroup>
+            <optgroup label="Sales & Marketing">
+              <option>Business Development Manager</option>
+              <option>Sales Executive</option>
+              <option>Marketing Manager</option>
+              <option>Digital Marketing Specialist</option>
+              <option>Account Manager</option>
+            </optgroup>
+            <optgroup label="Human Resources">
+              <option>HR Business Partner</option>
+              <option>Recruitment Specialist</option>
+              <option>HR Officer</option>
+              <option>Payroll Administrator</option>
+              <option>Training & Development Officer</option>
+            </optgroup>
+            <optgroup label="Operations">
+              <option>Operations Coordinator</option>
+              <option>Logistics Officer</option>
+              <option>Customer Service Representative</option>
+              <option>Administrative Assistant</option>
+              <option>Office Manager</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Department<span>*</span></label>
+          <select class="form-control" id="empDept">
+            <option value="">Select department...</option>
+            <option>Engineering</option><option>Sales</option><option>Operations</option>
+            <option>HR</option><option>Finance</option><option>Marketing</option><option>Executive</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Start Date<span>*</span></label><input type="date" class="form-control" id="empStartDate"></div>
+        <div class="form-group"><label class="form-label">Employment Type</label>
+          <select class="form-control" id="empType">
+            <option>Full-time</option><option>Part-time</option><option>Contract</option><option>Intern</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-section-title">💰 Compensation</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Basic Salary<span>*</span></label><input type="number" class="form-control" id="empSalary" placeholder="e.g. 85000" oninput="calcAllowances()"></div>
+        <div class="form-group"><label class="form-label">House Allowance</label><input type="number" class="form-control" id="empHouseAllow" placeholder="Auto-calculated (15%)"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Transport Allowance</label><input type="number" class="form-control" id="empTransport" value="4000"></div>
+        <div class="form-group"><label class="form-label">Medical Allowance</label><input type="number" class="form-control" id="empMedical" value="3000"></div>
+      </div>
+      <div class="form-section-title">🏦 Bank & Tax Details</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Bank Name</label><input class="form-control" id="empBank" placeholder="e.g. Equity Bank"></div>
+        <div class="form-group"><label class="form-label">Account Number</label><input class="form-control" id="empAccount" placeholder="Account number"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">KRA PIN / Tax ID</label><input class="form-control" id="empKRA" placeholder="e.g. A001234567B"></div>
+        <div class="form-group"><label class="form-label">NHIF Number</label><input class="form-control" id="empNHIF" placeholder="NHIF number"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('addEmployeeModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="addEmployee()">Save Employee</button>
+    </div>
+  </div>
+</div>
+
+<!-- Leave Request Modal -->
+<div class="modal-overlay" id="leaveModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Request Leave</div>
+      <button class="modal-close" onclick="closeModal('leaveModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Employee<span>*</span></label><select class="form-control" id="leaveEmployee"><option>John Kamau</option><option>Sarah Njoki</option><option>Peter Otieno</option></select></div>
+      <div class="form-group"><label class="form-label">Leave Type<span>*</span></label>
+        <select class="form-control" id="leaveType">
+          <option>Annual Leave</option><option>Sick Leave</option><option>Maternity Leave</option>
+          <option>Paternity Leave</option><option>Study Leave</option><option>Compassionate Leave</option><option>Unpaid Leave</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">From Date<span>*</span></label><input type="date" class="form-control" id="leaveFrom" onchange="calcLeaveDays()"></div>
+        <div class="form-group"><label class="form-label">To Date<span>*</span></label><input type="date" class="form-control" id="leaveTo" onchange="calcLeaveDays()"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Days Selected</label>
+        <div id="leaveDaysDisplay" style="padding:9px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-weight:600;color:var(--blue)">Select dates above</div>
+      </div>
+      <div class="form-group"><label class="form-label">Reason / Notes</label><textarea class="form-control" rows="3" id="leaveReason" placeholder="Brief reason for leave..."></textarea></div>
+      <div class="form-group"><label class="form-label">Attachments</label><input type="file" class="form-control"></div>
+      <div class="alert alert-info" style="font-size:12px">💡 Annual leave balance: <strong>19 days remaining</strong>. Leave will deduct from payslip if unpaid.</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('leaveModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitLeave()">Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- Run Payroll Modal -->
+<div class="modal-overlay" id="runPayrollModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <div class="modal-title">Run Payroll — January 2025</div>
+      <button class="modal-close" onclick="closeModal('runPayrollModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="workflow-steps mb-24">
+        <div class="wf-step done"><div class="wf-step-num">✓</div><div class="wf-step-label">Configure</div></div>
+        <div class="wf-line done"></div>
+        <div class="wf-step active"><div class="wf-step-num">2</div><div class="wf-step-label">Days Worked</div></div>
+        <div class="wf-line"></div>
+        <div class="wf-step"><div class="wf-step-num">3</div><div class="wf-step-label">Review</div></div>
+        <div class="wf-line"></div>
+        <div class="wf-step"><div class="wf-step-num">4</div><div class="wf-step-label">Submit</div></div>
+      </div>
+      <div class="alert alert-info">Configure attendance for January 2025. Working days this month: <strong>23 days</strong>. Leave deductions will be auto-applied.</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Pay Period</label>
+          <select class="form-control"><option selected>January 2025</option><option>February 2025</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Total Working Days</label>
+          <input type="number" class="form-control" value="23" id="workingDaysInput">
+        </div>
+      </div>
+      <div class="form-section-title">📅 Attendance Adjustments</div>
+      <div style="background:var(--surface-2);border-radius:10px;padding:16px;margin-bottom:16px">
+        <div style="font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:10px">Select leave pattern for each employee:</div>
+        <div id="attendanceList" style="display:flex;flex-direction:column;gap:8px">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('runPayrollModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="processPayroll()">Calculate & Process</button>
+    </div>
+  </div>
+</div>
+
+<!-- Country Modal -->
+<div class="modal-overlay" id="countryModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Select Country & Tax Jurisdiction</div>
+      <button class="modal-close" onclick="closeModal('countryModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Search Country</label><input class="form-control" placeholder="Search..." id="countrySearch" oninput="filterCountries()"></div>
+      <div id="countryList" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:400px;overflow-y:auto"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Onboarding Modal -->
+<div class="modal-overlay" id="onboardingModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <div class="modal-title">Start New Employee Onboarding</div>
+      <button class="modal-close" onclick="closeModal('onboardingModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Employee Name<span>*</span></label><input class="form-control" placeholder="Full name"></div>
+        <div class="form-group"><label class="form-label">Start Date<span>*</span></label><input type="date" class="form-control"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Job Title</label><input class="form-control" placeholder="Position"></div>
+        <div class="form-group"><label class="form-label">Department</label><select class="form-control"><option>Engineering</option><option>Sales</option><option>HR</option><option>Finance</option></select></div>
+      </div>
+      <div class="form-group"><label class="form-label">Manager / Buddy</label><input class="form-control" placeholder="Assign a buddy or manager"></div>
+      <div class="form-section-title">📋 Onboarding Tasks to Assign</div>
+      <div style="display:flex;flex-direction:column;gap:8px" id="onboardingTasksCheck">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('onboardingModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="startOnboarding()">Start Onboarding</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" style="position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:var(--shadow-lg);z-index:9999;transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none;max-width:300px"></div>
+
+<script>
+// ===== STATE =====
+const DB = {
+  country: { code: 'KE', name: 'Kenya', flag: '🇰🇪', currency: 'KES', symbol: 'KES' },
+  employees: [
+    {id:'EMP-001',first:'John',last:'Kamau',title:'Senior Software Engineer',dept:'Engineering',salary:85000,houseAllow:12750,transport:4000,medical:3000,bank:'Equity Bank',account:'0200000001',kra:'A001234567B',nhif:'00123456',status:'Active',daysWorked:21,leavedays:2,leaveType:'Annual Leave'},
+    {id:'EMP-002',first:'Sarah',last:'Njoki',title:'HR Manager',dept:'HR',salary:75000,houseAllow:11250,transport:4000,medical:3000,bank:'KCB Bank',account:'1234567890',kra:'A007654321C',nhif:'00234567',status:'Active',daysWorked:23,leavedays:0,leaveType:'',},
+    {id:'EMP-003',first:'Peter',last:'Otieno',title:'Sales Executive',dept:'Sales',salary:55000,houseAllow:8250,transport:4000,medical:2000,bank:'NCBA Bank',account:'9876543210',kra:'A003456789D',nhif:'00345678',status:'Active',daysWorked:20,leavedays:3,leaveType:'Sick Leave'},
+    {id:'EMP-004',first:'Grace',last:'Wanjiku',title:'Financial Analyst',dept:'Finance',salary:68000,houseAllow:10200,transport:4000,medical:3000,bank:'Equity Bank',account:'0300000004',kra:'A004567890E',nhif:'00456789',status:'Active',daysWorked:22,leavedays:1,leaveType:'Annual Leave'},
+    {id:'EMP-005',first:'Daniel',last:'Mwangi',title:'Operations Manager',dept:'Operations',salary:95000,houseAllow:14250,transport:5000,medical:4000,bank:'Absa Bank',account:'1122334455',kra:'A005678901F',nhif:'00567890',status:'Active',daysWorked:23,leavedays:0,leaveType:''},
+  ],
+  leaveRequests: [
+    {emp:'John Kamau',type:'Annual Leave',from:'2025-01-06',to:'2025-01-08',days:3,reason:'Family vacation',status:'approved'},
+    {emp:'Sarah Njoki',type:'Sick Leave',from:'2025-01-14',to:'2025-01-15',days:2,reason:'Medical appointment',status:'pending'},
+    {emp:'Peter Otieno',type:'Annual Leave',from:'2025-01-20',to:'2025-01-24',days:5,reason:'Personal travel',status:'pending'},
+    {emp:'Grace Wanjiku',type:'Maternity Leave',from:'2025-02-01',to:'2025-05-01',days:90,reason:'Maternity leave',status:'approved'},
+    {emp:'Daniel Mwangi',type:'Paternity Leave',from:'2025-01-10',to:'2025-01-15',days:5,reason:'Newborn care',status:'rejected'},
+  ]
+};
+
+// ===== COUNTRY TAX DATA =====
+const COUNTRIES = [
+  {code:'KE',name:'Kenya',flag:'🇰🇪',currency:'KES',symbol:'KES',authority:'Kenya Revenue Authority (KRA)',
+   bands:[{from:0,to:24000,rate:10},{from:24001,to:32333,rate:25},{from:32334,to:500000,rate:30},{from:500001,to:800000,rate:32.5},{from:800001,to:Infinity,rate:35}],
+   reliefs:'Personal relief: KES 2,400/mo. Insurance relief: 15% of premium (max KES 5,000/mo)',
+   statutory:[{name:'NHIF',basis:'Gross salary banded rate',min:'KES 150',max:'KES 1,700'},{name:'NSSF',basis:'6% of basic (Tier I & II)',min:'KES 360',max:'KES 1,080'},{name:'PAYE',basis:'Progressive tax bands above',min:'—',max:'35%'},{name:'NITA Levy',basis:'KES 50/mo per employee',min:'KES 50',max:'KES 50'}],
+   deadlines:[{name:'Monthly PAYE Return',date:'20th of following month',urgent:true},{name:'NHIF Contribution',date:'9th of following month',urgent:true},{name:'NSSF Contribution',date:'15th of following month',urgent:false},{name:'Annual Tax Return',date:'30th June each year',urgent:false}]},
+  {code:'NG',name:'Nigeria',flag:'🇳🇬',currency:'NGN',symbol:'₦',authority:'Federal Inland Revenue Service (FIRS)',
+   bands:[{from:0,to:300000,rate:7},{from:300001,to:600000,rate:11},{from:600001,to:1100000,rate:15},{from:1100001,to:1600000,rate:19},{from:1600001,to:3200000,rate:21},{from:3200001,to:Infinity,rate:24}],
+   reliefs:'CRA: Higher of ₦200,000 or 1% of gross income. Personal allowance: ₦200,000/yr + 20% gross',
+   statutory:[{name:'Pension (Employee)',basis:'8% of monthly emolument',min:'—',max:'8%'},{name:'Pension (Employer)',basis:'10% of monthly emolument',min:'—',max:'10%'},{name:'NHF',basis:'2.5% of basic salary',min:'—',max:'2.5%'},{name:'NSITF',basis:'1% of total emolument',min:'—',max:'1%'}],
+   deadlines:[{name:'Monthly PAYE Remittance',date:'10th of following month',urgent:true},{name:'Annual Tax Return (PIT)',date:'31st March each year',urgent:false},{name:'Pension Remittance',date:'7 working days after salary',urgent:true}]},
+  {code:'ZA',name:'South Africa',flag:'🇿🇦',currency:'ZAR',symbol:'R',authority:'South African Revenue Service (SARS)',
+   bands:[{from:0,to:237100,rate:18},{from:237101,to:370500,rate:26},{from:370501,to:512800,rate:31},{from:512801,to:673000,rate:36},{from:673001,to:857900,rate:39},{from:857901,to:1817000,rate:41},{from:1817001,to:Infinity,rate:45}],
+   reliefs:'Primary rebate: R17,235/yr. Secondary (65+): R9,444/yr. Tertiary (75+): R3,145/yr',
+   statutory:[{name:'UIF (Employee)',basis:'1% of remuneration',min:'—',max:'1% (cap R177.12/mo)'},{name:'UIF (Employer)',basis:'1% of remuneration',min:'—',max:'1% (cap R177.12/mo)'},{name:'SDL',basis:'1% of leviable amount',min:'—',max:'1%'}],
+   deadlines:[{name:'Monthly EMP201 Submission',date:'7th of following month',urgent:true},{name:'Annual Reconciliation (EMP501)',date:'31 May each year',urgent:false},{name:'IRP5 Certificates',date:'31 May each year',urgent:false}]},
+  {code:'GH',name:'Ghana',flag:'🇬🇭',currency:'GHS',symbol:'GHS',authority:'Ghana Revenue Authority (GRA)',
+   bands:[{from:0,to:4380,rate:0},{from:4381,to:5580,rate:5},{from:5581,to:6960,rate:10},{from:6961,to:10200,rate:17.5},{from:10201,to:19800,rate:25},{from:19801,to:Infinity,rate:30}],
+   reliefs:'Personal relief: GHS 1,200/yr. Relief on personal contribution to SSF',
+   statutory:[{name:'SSNIT (Employee)',basis:'5.5% of gross salary',min:'—',max:'5.5%'},{name:'SSNIT (Employer)',basis:'13% of gross salary',min:'—',max:'13%'},{name:'Tier 2 Pension',basis:'5% employee + 5% employer',min:'—',max:'10% combined'}],
+   deadlines:[{name:'Monthly PAYE Remittance',date:'15th of following month',urgent:true},{name:'SSNIT Contributions',date:'14th of following month',urgent:true},{name:'Annual Returns',date:'30 April each year',urgent:false}]},
+  {code:'UG',name:'Uganda',flag:'🇺🇬',currency:'UGX',symbol:'UGX',authority:'Uganda Revenue Authority (URA)',
+   bands:[{from:0,to:2820000,rate:0},{from:2820001,to:4020000,rate:10},{from:4020001,to:4920000,rate:20},{from:4920001,to:120000000,rate:30},{from:120000001,to:Infinity,rate:40}],
+   reliefs:'Monthly threshold: UGX 235,000 exempt. PAYE on income above threshold.',
+   statutory:[{name:'NSSF (Employee)',basis:'5% of gross pay',min:'—',max:'5%'},{name:'NSSF (Employer)',basis:'10% of gross pay',min:'—',max:'10%'},{name:'LST (Local Service Tax)',basis:'Banded annual tax',min:'UGX 100,000',max:'UGX 100,000'}],
+   deadlines:[{name:'Monthly PAYE Return',date:'15th of following month',urgent:true},{name:'NSSF Contributions',date:'15th of following month',urgent:true},{name:'Annual Return',date:'31 March each year',urgent:false}]},
+  {code:'TZ',name:'Tanzania',flag:'🇹🇿',currency:'TZS',symbol:'TZS',authority:'Tanzania Revenue Authority (TRA)',
+   bands:[{from:0,to:270000,rate:0},{from:270001,to:520000,rate:8},{from:520001,to:760000,rate:20},{from:760001,to:1000000,rate:25},{from:1000001,to:Infinity,rate:30}],
+   reliefs:'Monthly basic exemption: TZS 270,000. No additional personal reliefs.',
+   statutory:[{name:'NSSF (Employee)',basis:'10% of gross salary',min:'—',max:'10%'},{name:'NSSF (Employer)',basis:'10% of gross salary',min:'—',max:'10%'},{name:'SDL',basis:'4.5% of gross payroll',min:'—',max:'4.5%'}],
+   deadlines:[{name:'Monthly PAYE Return (Form IT.4)',date:'7th of following month',urgent:true},{name:'NSSF Contributions',date:'7th of following month',urgent:true},{name:'Annual Return',date:'30 June each year',urgent:false}]},
+  {code:'RW',name:'Rwanda',flag:'🇷🇼',currency:'RWF',symbol:'RWF',authority:'Rwanda Revenue Authority (RRA)',
+   bands:[{from:0,to:360000,rate:0},{from:360001,to:1200000,rate:20},{from:1200001,to:Infinity,rate:30}],
+   reliefs:'Monthly exempt threshold: RWF 30,000. No additional reliefs.',
+   statutory:[{name:'RSSB Pension (Employee)',basis:'6% of gross pay',min:'—',max:'6%'},{name:'RSSB Pension (Employer)',basis:'6% of gross pay',min:'—',max:'6%'},{name:'Maternity Insurance',basis:'0.6% employee + 0.6% employer',min:'—',max:'0.6% each'}],
+   deadlines:[{name:'Monthly PAYE Declaration',date:'15th of following month',urgent:true},{name:'RSSB Contributions',date:'15th of following month',urgent:true}]},
+  {code:'ET',name:'Ethiopia',flag:'🇪🇹',currency:'ETB',symbol:'ETB',authority:'Ethiopian Revenue and Customs Authority',
+   bands:[{from:0,to:600,rate:0},{from:601,to:1650,rate:10},{from:1651,to:3200,rate:15},{from:3201,to:5250,rate:20},{from:5251,to:7800,rate:25},{from:7801,to:10900,rate:30},{from:10901,to:Infinity,rate:35}],
+   reliefs:'Monthly exemption threshold: ETB 600. No additional reliefs.',
+   statutory:[{name:'CBE Pension (Employee)',basis:'7% of basic salary',min:'—',max:'7%'},{name:'CBE Pension (Employer)',basis:'11% of basic salary',min:'—',max:'11%'}],
+   deadlines:[{name:'Monthly PAYE Return',date:'10th of following month',urgent:true},{name:'Pension Contributions',date:'30th of same month',urgent:false}]},
+  {code:'GB',name:'United Kingdom',flag:'🇬🇧',currency:'GBP',symbol:'£',authority:'HM Revenue and Customs (HMRC)',
+   bands:[{from:0,to:12570,rate:0},{from:12571,to:50270,rate:20},{from:50271,to:125140,rate:40},{from:125141,to:Infinity,rate:45}],
+   reliefs:'Personal allowance: £12,570/yr. Marriage allowance, blind persons allowance.',
+   statutory:[{name:'Employee NIC',basis:'12% on £1,048-£4,189/mo; 2% above',min:'—',max:'12%'},{name:'Employer NIC',basis:'13.8% above £758/mo secondary threshold',min:'—',max:'13.8%'},{name:'Student Loan',basis:'Plan 1: 9% above £22,015/yr',min:'—',max:'9%'}],
+   deadlines:[{name:'Monthly RTI FPS Submission',date:'On or before pay day',urgent:true},{name:'Monthly NIC & PAYE Payment',date:'19th of following month',urgent:true},{name:'Annual P60',date:'31 May each year',urgent:false},{name:'Annual P11D',date:'6 July each year',urgent:false}]},
+  {code:'US',name:'United States',flag:'🇺🇸',currency:'USD',symbol:'$',authority:'Internal Revenue Service (IRS)',
+   bands:[{from:0,to:11600,rate:10},{from:11601,to:47150,rate:12},{from:47151,to:100525,rate:22},{from:100526,to:191950,rate:24},{from:191951,to:243725,rate:32},{from:243726,to:609350,rate:35},{from:609351,to:Infinity,rate:37}],
+   reliefs:'Standard deduction: $14,600 (single). Personal exemption suspended under TCJA.',
+   statutory:[{name:'Social Security (Employee)',basis:'6.2% up to $168,600 wage base',min:'—',max:'6.2%'},{name:'Medicare (Employee)',basis:'1.45% + 0.9% above $200,000',min:'—',max:'2.35%'},{name:'FUTA (Employer)',basis:'6% on first $7,000 (0.6% after credit)',min:'—',max:'6%'}],
+   deadlines:[{name:'Bi-weekly/Monthly 941 Deposits',date:'Per deposit schedule',urgent:true},{name:'Quarterly Form 941',date:'Last day of month after quarter',urgent:false},{name:'Annual Form W-2',date:'31 January each year',urgent:false}]},
+];
+
+// ===== PAYE CALCULATION =====
+function calcPAYE(grossMonthly, country) {
+  const c = country || DB.country;
+  const cc = COUNTRIES.find(x => x.code === c.code) || COUNTRIES[0];
+  const grossAnnual = grossMonthly * 12;
+  let tax = 0;
+  let prev = 0;
+  for (const band of cc.bands) {
+    const taxable = Math.min(grossAnnual, band.to === Infinity ? grossAnnual : band.to) - prev;
+    if (taxable <= 0) break;
+    tax += taxable * (band.rate / 100);
+    prev = band.to === Infinity ? grossAnnual : band.to;
+    if (grossAnnual <= band.to) break;
+  }
+  let monthlyTax = tax / 12;
+  // Kenya personal relief
+  if (c.code === 'KE') monthlyTax = Math.max(0, monthlyTax - 2400);
+  return Math.round(Math.max(0, monthlyTax));
+}
+
+function calcNHIF(gross) {
+  if (DB.country.code !== 'KE') return 0;
+  if (gross < 6000) return 150;
+  if (gross < 8000) return 300;
+  if (gross < 12000) return 400;
+  if (gross < 15000) return 500;
+  if (gross < 20000) return 600;
+  if (gross < 25000) return 750;
+  if (gross < 30000) return 850;
+  if (gross < 35000) return 900;
+  if (gross < 40000) return 950;
+  if (gross < 45000) return 1000;
+  if (gross < 50000) return 1100;
+  if (gross < 60000) return 1200;
+  if (gross < 70000) return 1300;
+  if (gross < 80000) return 1400;
+  if (gross < 90000) return 1500;
+  if (gross < 100000) return 1600;
+  return 1700;
+}
+
+function calcNSSF(basic) {
+  if (DB.country.code !== 'KE') return 0;
+  return Math.round(Math.min(basic * 0.06, 1080));
+}
+
+function calcEmployeeDeductions(emp) {
+  const gross = (emp.salary * (emp.daysWorked / 23)) + emp.houseAllow + emp.transport + emp.medical;
+  const paye = calcPAYE(gross);
+  const nhif = calcNHIF(gross);
+  const nssf = calcNSSF(emp.salary);
+  const net = gross - paye - nhif - nssf;
+  return { gross: Math.round(gross), paye, nhif, nssf, net: Math.round(net) };
+}
+
+// ===== PAGE NAVIGATION =====
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const pg = document.getElementById('page-' + page);
+  if (pg) pg.classList.add('active');
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(n => { if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + page + "'")) n.classList.add('active'); });
+  const titles = {dashboard:'Dashboard',employees:'Employee Directory',payroll:'Payroll Run',payslips:'Payslips',tax:'Tax & Compliance',leave:'Leave Management',onboarding:'HR Onboarding',approvals:'Approvals & Workflow',reports:'Reports & Analytics',settings:'Settings',admin:'Admin & Billing'};
+  document.getElementById('headerTitle').textContent = titles[page] || page;
+  if (page === 'employees') renderEmployeeTable();
+  if (page === 'payroll') renderPayrollTable();
+  if (page === 'payslips') initPayslipDropdown();
+  if (page === 'leave') renderLeaveTable();
+  if (page === 'tax') renderTaxPage();
+  if (page === 'onboarding') renderOnboarding();
+}
+
+// ===== EMPLOYEE TABLE =====
+function renderEmployeeTable() {
+  const tbody = document.getElementById('employeeBody');
+  tbody.innerHTML = DB.employees.map(e => {
+    const d = calcEmployeeDeductions(e);
+    return `<tr>
+      <td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--accent));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">${e.first[0]}${e.last[0]}</div><div><div class="fw-600">${e.first} ${e.last}</div><div class="text-sm text-muted">${e.id}</div></div></div></td>
+      <td class="text-muted">${e.id}</td>
+      <td>${e.title}</td>
+      <td><span class="badge badge-blue">${e.dept}</span></td>
+      <td class="fw-600">${DB.country.symbol} ${e.salary.toLocaleString()}</td>
+      <td><span class="badge badge-green">${e.status}</span></td>
+      <td><div class="flex gap-8"><button class="btn btn-ghost btn-sm" onclick="viewEmployee('${e.id}')">View</button><button class="btn btn-secondary btn-sm" onclick="editEmployee('${e.id}')">Edit</button></div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ===== PAYROLL TABLE =====
+function renderPayrollTable() {
+  const tbody = document.getElementById('payrollBody');
+  let totalGross=0, totalTax=0, totalNet=0;
+  tbody.innerHTML = DB.employees.map(e => {
+    const d = calcEmployeeDeductions(e);
+    totalGross += d.gross; totalTax += d.paye; totalNet += d.net;
+    const attendanceLabel = e.daysWorked < 23 ? `${e.daysWorked}/23 (${e.leaveType || 'Leave'})` : `${e.daysWorked}/23`;
+    return `<tr onclick="viewPayrollDetail('${e.id}')">
+      <td><div class="fw-600">${e.first} ${e.last}</div><div class="text-sm text-muted">${e.id}</div></td>
+      <td class="text-muted text-sm">${e.title}</td>
+      <td><span class="${e.daysWorked < 23 ? 'badge badge-amber' : 'badge badge-green'}">${attendanceLabel}</span></td>
+      <td>${DB.country.symbol} ${e.salary.toLocaleString()}</td>
+      <td>${DB.country.symbol} ${(e.houseAllow + e.transport + e.medical).toLocaleString()}</td>
+      <td class="fw-600">${DB.country.symbol} ${d.gross.toLocaleString()}</td>
+      <td style="color:var(--red)">${DB.country.symbol} ${d.paye.toLocaleString()}</td>
+      <td style="color:var(--amber)">${DB.country.symbol} ${(d.nhif + d.nssf).toLocaleString()}</td>
+      <td class="fw-600" style="color:var(--accent)">${DB.country.symbol} ${d.net.toLocaleString()}</td>
+      <td><span class="badge badge-amber">Pending</span></td>
+      <td><button class="btn btn-ghost btn-sm">Edit</button></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('totalGross').textContent = `${DB.country.symbol} ${totalGross.toLocaleString()}`;
+  document.getElementById('totalTax').textContent = `${DB.country.symbol} ${totalTax.toLocaleString()}`;
+  document.getElementById('totalNet').textContent = `${DB.country.symbol} ${totalNet.toLocaleString()}`;
+  document.getElementById('dashPayroll').textContent = `${DB.country.symbol} ${(totalGross/1000).toFixed(2)}M`;
+}
+
+// ===== PAYSLIP =====
+function initPayslipDropdown() {
+  const sel = document.getElementById('payslipEmployee');
+  sel.innerHTML = '<option value="">Select employee...</option>' + DB.employees.map((e,i) => `<option value="${i}">${e.first} ${e.last} (${e.id})</option>`).join('');
+  if (sel.options.length > 1) { sel.selectedIndex = 1; generatePayslip(); }
+}
+
+function generatePayslip() {
+  const idx = parseInt(document.getElementById('payslipEmployee').value);
+  const period = document.getElementById('payslipPeriod').value;
+  if (isNaN(idx) || idx < 0) return;
+  const e = DB.employees[idx];
+  const d = calcEmployeeDeductions(e);
+  document.getElementById('psPeriod').textContent = period;
+  document.getElementById('psPayDate').textContent = `Pay Date: 31 ${period}`;
+  document.getElementById('psName').textContent = `${e.first} ${e.last}`;
+  document.getElementById('psId').textContent = e.id;
+  document.getElementById('psTitle').textContent = e.title;
+  document.getElementById('psDept').textContent = e.dept;
+  document.getElementById('psKRA').textContent = e.kra || 'A000000000B';
+  document.getElementById('psNHIF').textContent = e.nhif || '00000000';
+  document.getElementById('psWorkDays').textContent = '23';
+  document.getElementById('psDaysWorked').textContent = e.daysWorked;
+  document.getElementById('psLeave').textContent = e.leavedays > 0 ? `${e.leavedays} days (${e.leaveType})` : 'None';
+  document.getElementById('psBank').textContent = e.bank || 'N/A';
+  document.getElementById('psAccount').textContent = e.account || 'N/A';
+  const sym = DB.country.symbol;
+  document.getElementById('psBasic').textContent = `${sym} ${Math.round(e.salary * e.daysWorked / 23).toLocaleString()}`;
+  document.getElementById('psHouseAllow').textContent = `${sym} ${e.houseAllow.toLocaleString()}`;
+  document.getElementById('psTransport').textContent = `${sym} ${e.transport.toLocaleString()}`;
+  document.getElementById('psMedical').textContent = `${sym} ${e.medical.toLocaleString()}`;
+  document.getElementById('psPAYE').textContent = `${sym} ${d.paye.toLocaleString()}`;
+  document.getElementById('psNHIFDed').textContent = `${sym} ${d.nhif.toLocaleString()}`;
+  document.getElementById('psNSSF').textContent = `${sym} ${d.nssf.toLocaleString()}`;
+  document.getElementById('psLoan').textContent = `${sym} 0`;
+  document.getElementById('psGross').textContent = `${sym} ${d.gross.toLocaleString()}`;
+  document.getElementById('psDedTotal').textContent = `${sym} ${(d.paye + d.nhif + d.nssf).toLocaleString()}`;
+  document.getElementById('psNet').textContent = `${sym} ${d.net.toLocaleString()}`;
+}
+
+function printPayslip() {
+  const payslipEl = document.getElementById('payslipDoc');
+  const newWin = window.open('', '_blank', 'width=800,height=900');
+  newWin.document.write(`<!DOCTYPE html><html><head><title>Payslip</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  body{font-family:'DM Sans',sans-serif;font-size:14px;background:#fff;margin:0;padding:20px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  .payslip-doc{max-width:720px;margin:0 auto;padding:40px}
+  .payslip-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:20px;border-bottom:2px solid #0A1628;margin-bottom:20px}
+  .payslip-company{font-size:22px;font-weight:800;color:#0A1628}
+  .payslip-company-sub{font-size:12px;color:#94A3B8;margin-top:3px}
+  .payslip-title{font-size:18px;font-weight:700;color:#1D6FEB;text-align:right}
+  .payslip-period{font-size:12px;color:#94A3B8;text-align:right;margin-top:3px}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:16px 0;border-bottom:1px solid #E2E8F0;margin-bottom:20px}
+  .info-label{font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
+  .info-row{display:flex;justify-content:space-between;margin-bottom:4px}
+  .info-key{font-size:12px;color:#475569}
+  .info-val{font-size:12px;font-weight:600;color:#0F172A}
+  table{width:100%;border-collapse:collapse;margin-top:16px}
+  th{font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.6px;padding:8px 0;border-bottom:1.5px solid #E2E8F0;text-align:left}
+  th:last-child,td:last-child{text-align:right}
+  td{font-size:13px;color:#0F172A;padding:8px 0;border-bottom:1px solid #F7F9FC}
+  .total-row td{font-weight:700;font-size:14px;padding-top:12px;border-top:2px solid #0A1628;border-bottom:none}
+  .net-box{margin-top:20px;background:#0A1628;border-radius:10px;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;color:#fff}
+  .net-label{font-size:13px;color:rgba(255,255,255,.7)}
+  .net-amount{font-size:24px;font-weight:800}
+  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;background:#ECFDF5;color:#059669}
+  footer{margin-top:20px;padding-top:12px;border-top:1px solid #E2E8F0;font-size:11px;color:#94A3B8;text-align:center}
+  @media print{body{padding:0}button{display:none}}
+  </style></head><body><div class="payslip-doc">${payslipEl.innerHTML}</div>
+  <script>window.onload=function(){window.print()}<\/script></body></html>`);
+  newWin.document.close();
+  showToast('✅ Payslip sent to printer');
+}
+
+function downloadPayslipPDF() { showToast('📄 Preparing PDF download...'); setTimeout(()=>showToast('✅ Payslip PDF downloaded'),1500); }
+function emailPayslip() { showToast('✉ Payslip emailed to employee'); }
+function bulkDownload() { showToast('📦 Preparing bulk ZIP download...'); }
+function generateAllPayslips() { showToast('🔄 Generating all 156 payslips...'); }
+
+// ===== TAX PAGE =====
+function renderTaxPage() {
+  const c = COUNTRIES.find(x => x.code === DB.country.code) || COUNTRIES[0];
+  document.getElementById('taxCountryName').textContent = c.name;
+  document.getElementById('taxCountryAlert').textContent = c.name;
+  document.getElementById('taxAuthority').textContent = c.authority;
+  document.getElementById('taxCurrency').textContent = c.currency;
+
+  // Tax bands
+  const bandsEl = document.getElementById('taxBandsContainer');
+  bandsEl.innerHTML = `<div style="margin-bottom:12px;font-size:12px;color:var(--text-2)">${c.reliefs}</div>` +
+    c.bands.map((b,i) => `<div class="flex justify-between items-center" style="padding:8px 0;border-bottom:1px solid var(--border)">
+      <div><div class="fw-600" style="font-size:13px">Band ${i+1}: ${b.rate}%</div>
+      <div class="text-sm text-muted">${b.from === 0 ? 'Up to' : 'Over'} ${c.symbol} ${b.from.toLocaleString()}${b.to !== Infinity ? ` to ${c.symbol} ${b.to.toLocaleString()}` : '+'} /yr</div></div>
+      <div style="font-size:18px;font-weight:700;color:var(--blue)">${b.rate}%</div>
+    </div>`).join('');
+
+  // Statutory
+  const statEl = document.getElementById('statutoryContainer');
+  statEl.innerHTML = c.statutory.map(s => `<div class="flex justify-between items-center" style="padding:10px 0;border-bottom:1px solid var(--border)">
+    <div><div class="fw-600" style="font-size:13px">${s.name}</div><div class="text-sm text-muted">${s.basis}</div></div>
+    <div style="text-align:right"><div class="fw-600" style="color:var(--blue)">${s.max}</div><div class="text-sm text-muted">Max: ${s.max}</div></div>
+  </div>`).join('');
+
+  // Deadlines
+  const dlEl = document.getElementById('deadlinesList');
+  dlEl.innerHTML = c.deadlines.map(d => `<div class="flex justify-between items-center" style="padding:10px;background:${d.urgent?'#FFFBEB':'var(--surface-2)'};border-radius:8px;border:1px solid ${d.urgent?'#FCD34D':'var(--border)'}">
+    <div><div class="fw-600" style="font-size:13px">${d.name}</div><div class="text-sm text-muted">Due: ${d.date}</div></div>
+    ${d.urgent?'<span class="badge badge-amber">Urgent</span>':'<span class="badge badge-gray">Upcoming</span>'}
+  </div>`).join('');
+}
+
+function calculateTax() {
+  const val = parseFloat(document.getElementById('taxCalcInput').value);
+  const c = COUNTRIES.find(x => x.code === DB.country.code) || COUNTRIES[0];
+  if (!val || val <= 0) { document.getElementById('taxCalcResult').style.display='none'; return; }
+  const gross = val;
+  const houseAllow = gross * 0.15;
+  const transport = 4000;
+  const medical = 3000;
+  const totalGross = gross + (DB.country.code === 'KE' ? houseAllow + transport + medical : 0);
+  const paye = calcPAYE(totalGross);
+  const nhif = calcNHIF(totalGross);
+  const nssf = calcNSSF(gross);
+  const totalDed = paye + nhif + nssf;
+  const net = Math.round(totalGross - totalDed);
+  const sym = DB.country.symbol;
+  document.getElementById('taxCalcResult').style.display = 'block';
+  document.getElementById('taxCalcBreakdown').innerHTML = `
+    <div class="flex justify-between"><span class="text-muted">Basic Salary</span><span class="fw-600">${sym} ${gross.toLocaleString()}</span></div>
+    ${DB.country.code === 'KE' ? `<div class="flex justify-between"><span class="text-muted">House Allow (15%)</span><span>${sym} ${Math.round(houseAllow).toLocaleString()}</span></div>
+    <div class="flex justify-between"><span class="text-muted">Transport Allow</span><span>${sym} ${transport.toLocaleString()}</span></div>
+    <div class="flex justify-between"><span class="text-muted">Medical Allow</span><span>${sym} ${medical.toLocaleString()}</span></div>` : ''}
+    <div class="flex justify-between fw-600"><span>Total Gross</span><span>${sym} ${Math.round(totalGross).toLocaleString()}</span></div>
+    <div class="divider" style="margin:8px 0"></div>
+    <div class="flex justify-between" style="color:var(--red)"><span>PAYE Tax</span><span>- ${sym} ${paye.toLocaleString()}</span></div>
+    ${DB.country.code === 'KE' ? `<div class="flex justify-between" style="color:var(--amber)"><span>NHIF</span><span>- ${sym} ${nhif.toLocaleString()}</span></div>
+    <div class="flex justify-between" style="color:var(--amber)"><span>NSSF</span><span>- ${sym} ${nssf.toLocaleString()}</span></div>` : ''}
+    <div class="divider" style="margin:8px 0"></div>
+    <div class="flex justify-between" style="font-size:15px"><span class="fw-600">Net Pay</span><span class="fw-700" style="color:var(--accent)">${sym} ${net.toLocaleString()}</span></div>
+    <div style="font-size:11px;color:var(--text-3);margin-top:4px">Effective tax rate: ${((totalDed/totalGross)*100).toFixed(1)}%</div>`;
+}
+
+// ===== LEAVE =====
+function renderLeaveTable(filter) {
+  const tbody = document.getElementById('leaveBody');
+  const reqs = filter && filter !== 'all' ? DB.leaveRequests.filter(r => r.status === filter) : DB.leaveRequests;
+  tbody.innerHTML = reqs.map(r => `<tr>
+    <td class="fw-600">${r.emp}</td>
+    <td>${r.type}</td>
+    <td>${r.from}</td>
+    <td>${r.to}</td>
+    <td class="fw-600">${r.days}</td>
+    <td class="text-muted text-sm">${r.reason}</td>
+    <td><span class="badge badge-${r.status==='approved'?'green':r.status==='rejected'?'red':'amber'}">${r.status}</span></td>
+    <td>${r.status==='pending'?`<div class="flex gap-8"><button class="btn btn-success btn-sm" onclick="approveLeave(this)">Approve</button><button class="btn btn-danger btn-sm">Deny</button></div>`:'<button class="btn btn-ghost btn-sm">View</button>'}</td>
+  </tr>`).join('');
+}
+
+// Calendar
+let calYear=2025, calMonth=0;
+function renderCalendar() {
+  const label = new Date(calYear, calMonth, 1).toLocaleDateString('en',{month:'long',year:'numeric'});
+  document.getElementById('calMonthLabel').textContent = label;
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const daysInPrev = new Date(calYear, calMonth, 0).getDate();
+  const container = document.getElementById('calDays');
+  // Clear and rebuild
+  const calGrid = container.parentElement;
+  // Remove old day cells
+  const oldDays = calGrid.querySelectorAll('.cal-day');
+  oldDays.forEach(d => d.remove());
+  // Add prev month days
+  for (let i=firstDay-1; i>=0; i--) {
+    const d = document.createElement('div');
+    d.className = 'cal-day other-month';
+    d.textContent = daysInPrev - i;
+    calGrid.appendChild(d);
+  }
+  // Add current month
+  const today = new Date();
+  for (let i=1; i<=daysInMonth; i++) {
+    const d = document.createElement('div');
+    d.className = 'cal-day';
+    d.textContent = i;
+    if (i===today.getDate() && calMonth===today.getMonth() && calYear===today.getFullYear()) d.classList.add('today');
+    // Sample leave days
+    if ([6,7,8].includes(i) && calMonth===0) d.classList.add('leave');
+    if ([14].includes(i) && calMonth===0) d.classList.add('absent');
+    if ([1].includes(i) && calMonth===0) d.classList.add('holiday');
+    d.onclick = () => { calGrid.querySelectorAll('.cal-day.selected').forEach(x=>x.classList.remove('selected')); d.classList.add('selected'); };
+    calGrid.appendChild(d);
+  }
+}
+function prevMonth() { calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); }
+function nextMonth() { calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); }
+
+function filterLeave(el, filter) {
+  document.querySelectorAll('#page-leave .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderLeaveTable(filter);
+}
+
+function calcLeaveDays() {
+  const from = document.getElementById('leaveFrom').value;
+  const to = document.getElementById('leaveTo').value;
+  if (!from || !to) return;
+  const diff = Math.round((new Date(to) - new Date(from)) / 86400000) + 1;
+  document.getElementById('leaveDaysDisplay').textContent = diff > 0 ? `${diff} working day(s) selected` : 'Invalid date range';
+}
+
+// ===== ONBOARDING =====
+const ONBOARDING_TASKS = [
+  'Send offer letter and employment contract','Set up employee email account','Configure access to company systems','Assign laptop/equipment','Induction and orientation session','Meet the team introduction','Complete bank details form','Submit tax and statutory forms (KRA PIN, NHIF, NSSF)','Review company policies and handbook','Health and safety training','Set up performance objectives for first 90 days','Buddy/mentor assignment','First 30-day check-in scheduled'
+];
+
+function renderOnboarding() {
+  // Active onboarding
+  document.getElementById('onboardingList').innerHTML = [
+    {name:'Sarah Njoki',title:'Software Engineer',dept:'Engineering',progress:65,days:5},
+    {name:'Brian Odhiambo',title:'Sales Executive',dept:'Sales',progress:30,days:2},
+    {name:'Mercy Auma',title:'HR Officer',dept:'HR',progress:85,days:8},
+  ].map(o=>`<div style="border:1px solid var(--border);border-radius:10px;padding:14px">
+    <div class="flex justify-between items-center mb-8">
+      <div class="fw-600">${o.name}</div>
+      <span class="badge badge-blue">${o.progress}%</span>
+    </div>
+    <div class="text-sm text-muted mb-8">${o.title} · ${o.dept} · Day ${o.days} of onboarding</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${o.progress}%"></div></div>
+    <div class="flex gap-8 mt-8"><button class="btn btn-secondary btn-sm">View Tasks</button><button class="btn btn-primary btn-sm">Send Reminder</button></div>
+  </div>`).join('');
+
+  // Checklist template
+  document.getElementById('checklistTemplate').innerHTML = ONBOARDING_TASKS.map((t,i)=>`
+    <div class="flex items-center gap-10"><input type="checkbox" ${i<5?'checked':''} style="width:16px;height:16px;accent-color:var(--accent)">
+    <span style="font-size:13px;color:var(--text-1)">${t}</span></div>`).join('');
+
+  // Modal tasks
+  const el = document.getElementById('onboardingTasksCheck');
+  if (el) el.innerHTML = ONBOARDING_TASKS.map(t=>`
+    <div class="flex items-center gap-10"><input type="checkbox" checked style="width:16px;height:16px;accent-color:var(--accent)">
+    <span style="font-size:13px">${t}</span></div>`).join('');
+}
+
+// ===== COUNTRY MODAL =====
+function openCountryModal() {
+  document.getElementById('countryList').innerHTML = COUNTRIES.map(c=>`
+    <div onclick="selectCountry('${c.code}')" style="cursor:pointer;border:1.5px solid ${DB.country.code===c.code?'var(--blue)':'var(--border)'};border-radius:8px;padding:12px 14px;background:${DB.country.code===c.code?'var(--blue-pale)':'var(--surface)'};transition:all .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='${DB.country.code===c.code?'var(--blue)':'var(--border)'}'">
+      <div style="font-size:22px">${c.flag}</div>
+      <div style="font-size:13px;font-weight:600;margin-top:4px">${c.name}</div>
+      <div style="font-size:11px;color:var(--text-3)">${c.currency}</div>
+    </div>`).join('');
+  openModal('countryModal');
+}
+
+function filterCountries() {
+  const q = document.getElementById('countrySearch').value.toLowerCase();
+  const filtered = COUNTRIES.filter(c => c.name.toLowerCase().includes(q) || c.currency.toLowerCase().includes(q));
+  document.getElementById('countryList').innerHTML = filtered.map(c=>`
+    <div onclick="selectCountry('${c.code}')" style="cursor:pointer;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;background:var(--surface);transition:all .15s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:22px">${c.flag}</div>
+      <div style="font-size:13px;font-weight:600;margin-top:4px">${c.name}</div>
+      <div style="font-size:11px;color:var(--text-3)">${c.currency}</div>
+    </div>`).join('');
+}
+
+function selectCountry(code) {
+  const c = COUNTRIES.find(x=>x.code===code);
+  if (!c) return;
+  DB.country = {code:c.code, name:c.name, flag:c.flag, currency:c.currency, symbol:c.currency};
+  document.getElementById('currentFlag').textContent = c.flag;
+  document.getElementById('currentCountry').textContent = c.name;
+  closeModal('countryModal');
+  renderTaxPage();
+  showToast(`🌍 Switched to ${c.name} — tax rates updated`);
+}
+
+// ===== MODALS =====
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function openAddEmployeeModal() {
+  openModal('addEmployeeModal');
+  document.getElementById('empStartDate').value = '2025-01-27';
+}
+function openLeaveModal() { openModal('leaveModal'); }
+function openRunPayrollModal() {
+  const attEl = document.getElementById('attendanceList');
+  attEl.innerHTML = DB.employees.map((e,i)=>`<div class="flex items-center justify-between" style="padding:8px;background:var(--surface);border-radius:8px;border:1px solid var(--border)">
+    <div class="fw-600" style="font-size:13px">${e.first} ${e.last}</div>
+    <div class="flex gap-8 items-center">
+      <label style="font-size:12px;color:var(--text-2)">Days worked:</label>
+      <input type="number" min="0" max="23" value="${e.daysWorked}" style="width:60px;padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit" onchange="DB.employees[${i}].daysWorked=parseInt(this.value)||0">
+      <select style="padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;color:var(--text-2)" onchange="DB.employees[${i}].leaveType=this.value">
+        <option value="" ${!e.leaveType?'selected':''}>No leave</option>
+        <option value="Annual Leave" ${e.leaveType==='Annual Leave'?'selected':''}>Annual Leave</option>
+        <option value="Sick Leave" ${e.leaveType==='Sick Leave'?'selected':''}>Sick Leave</option>
+        <option value="Unpaid Leave" ${e.leaveType==='Unpaid Leave'?'selected':''}>Unpaid Leave</option>
+        <option value="Public Holiday" ${e.leaveType==='Public Holiday'?'selected':''}>Public Holiday</option>
+      </select>
+    </div>
+  </div>`).join('');
+  openModal('runPayrollModal');
+}
+function openOnboardingModal() { renderOnboarding(); openModal('onboardingModal'); }
+
+// Close on backdrop click
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if(e.target === el) el.classList.remove('open'); });
+});
+
+// ===== ACTIONS =====
+function addEmployee() {
+  const first = document.getElementById('empFirstName').value.trim();
+  const last = document.getElementById('empLastName').value.trim();
+  const title = document.getElementById('empJobTitle').value;
+  const dept = document.getElementById('empDept').value;
+  const salary = parseFloat(document.getElementById('empSalary').value) || 0;
+  if (!first || !last || !title || !dept) { showToast('⚠ Please fill in required fields','warning'); return; }
+  const id = 'EMP-' + String(DB.employees.length+1).padStart(3,'0');
+  DB.employees.push({id, first, last, title, dept, salary, houseAllow: Math.round(salary*0.15), transport: parseInt(document.getElementById('empTransport').value)||4000, medical: parseInt(document.getElementById('empMedical').value)||3000, bank: document.getElementById('empBank').value, account: document.getElementById('empAccount').value, kra: document.getElementById('empKRA').value, nhif: document.getElementById('empNHIF').value, status:'Active', daysWorked:23, leavedays:0, leaveType:''});
+  closeModal('addEmployeeModal');
+  renderEmployeeTable();
+  showToast(`✅ ${first} ${last} added successfully`);
+}
+
+function calcAllowances() {
+  const sal = parseFloat(document.getElementById('empSalary').value) || 0;
+  document.getElementById('empHouseAllow').value = Math.round(sal * 0.15);
+}
+
+function submitLeave() {
+  const emp = document.getElementById('leaveEmployee').value;
+  const type = document.getElementById('leaveType').value;
+  const from = document.getElementById('leaveFrom').value;
+  const to = document.getElementById('leaveTo').value;
+  const reason = document.getElementById('leaveReason').value;
+  if (!from || !to) { showToast('⚠ Please select leave dates','warning'); return; }
+  const days = Math.round((new Date(to)-new Date(from))/86400000)+1;
+  DB.leaveRequests.unshift({emp, type, from, to, days, reason: reason||'Not specified', status:'pending'});
+  closeModal('leaveModal');
+  renderLeaveTable();
+  showToast('✅ Leave request submitted for approval');
+}
+
+function processPayroll() {
+  closeModal('runPayrollModal');
+  renderPayrollTable();
+  showToast('✅ Payroll processed — awaiting manager approval');
+}
+
+function approvePayroll() {
+  const comment = document.getElementById('approvalComment').value;
+  showToast('✅ Payroll approved! Moving to Finance sign-off');
+}
+function rejectPayroll() { showToast('❌ Payroll rejected — HR notified'); }
+function submitForApproval() { showToast('📨 Payroll submitted for manager approval'); }
+function approveLeave(btn) { btn.closest('tr').querySelector('.badge').className='badge badge-green'; btn.closest('td').innerHTML='<span class="badge badge-green">Approved</span>'; showToast('✅ Leave approved'); }
+function approveAction(btn) { btn.closest('div').style.opacity='.5'; showToast('✅ Leave request approved'); }
+
+function filterDept(el, dept) {
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderEmployeeTable();
+}
+
+function switchApprovalTab(el, type) {
+  document.querySelectorAll('#page-approvals .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function switchSettingsTab(el, section) {
+  document.querySelectorAll('#settingsTabs .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  ['company','payroll_settings','users','notifications','integrations'].forEach(s=>{
+    const el2 = document.getElementById('settings-'+s);
+    if (el2) el2.style.display = s===section?'block':'none';
+  });
+}
+
+function saveSettings() { showToast('✅ Settings saved successfully'); }
+function startOnboarding() { closeModal('onboardingModal'); showToast('🚀 Onboarding workflow started'); }
+function viewEmployee(id) { showToast('👤 Opening employee profile: '+id); }
+function editEmployee(id) { openAddEmployeeModal(); }
+function viewPayrollDetail(id) {}
+function exportReport() { showToast('📊 Generating report PDF...'); }
+
+// ===== TOAST =====
+let toastTimer;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = type === 'warning' ? 'var(--amber)' : type === 'error' ? 'var(--red)' : 'var(--navy)';
+  t.style.opacity = '1';
+  t.style.transform = 'translateY(0)';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(20px)';}, 3000);
+}
+
+// ===== INIT =====
+window.addEventListener('DOMContentLoaded', () => {
+  renderCalendar();
+  renderEmployeeTable();
+  // Pre-fill payslip dropdown immediately
+  setTimeout(initPayslipDropdown, 100);
+  showToast('👋 Welcome to PayFlow Global');
+});
+</script>
+</body>
+</html>
