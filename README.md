@@ -1,0 +1,1 @@
+ the Onboarding section, enhance the task management by creating a visual representation of task dependencies. This could be a flowchart or a graph that clearly shows the order and relationships between onboarding tasks, helping users understand and manage complex onboarding sequences.
